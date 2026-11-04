@@ -85,6 +85,7 @@ export function Footer() {
           <a href={`tel:${SITE.phoneHref}`} className="mt-2 block text-sm hover:text-accent">{SITE.phone} <span className="text-mute">· Call / WhatsApp</span></a>
           <a href={`tel:${SITE.phone2Href}`} className="mt-1 block text-sm hover:text-accent">{SITE.phone2}</a>
           <a href={SITE.whatsapp} target="_blank" rel="noopener" className="mt-2 block text-sm text-accent">WhatsApp us ↗</a>
+          <a href={SITE.instagram} target="_blank" rel="noopener me" className="mt-1 block text-sm text-accent">Instagram @thegxgroup ↗</a>
           <p className="mt-2 text-sm text-mute">{SITE.location}</p>
         </div>
       </div>

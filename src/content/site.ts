@@ -8,6 +8,7 @@ export const SITE = {
   phone2: '+91 74118 29410',
   phone2Href: '+917411829410',
   whatsapp: 'https://wa.me/917760287733',
+  instagram: 'https://www.instagram.com/thegxgroup',
   parent: { name: 'GarudawnX', url: 'https://garudawnx.com' },
   partnershipsEmail: 'partnerships@thegxgroup.com',
   projectsEmail: 'projects@thegxgroup.com',

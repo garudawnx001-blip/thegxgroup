@@ -27,6 +27,7 @@ const org = {
   parentOrganization: { '@type': 'Organization', name: 'GarudawnX', url: 'https://garudawnx.com', logo: `${SITE.url}/garudawnx-mark.webp` }, description: SITE.description, email: SITE.email,
   address: { '@type': 'PostalAddress', addressLocality: 'Bengaluru', addressRegion: 'Karnataka', addressCountry: 'IN' },
   areaServed: [{ '@type': 'Country', name: 'India' }, 'Worldwide'],
+  sameAs: [SITE.instagram, 'https://garudawnx.com'],
   knowsAbout: ['Mobile app development', 'Web application development', 'SaaS development', 'AI and automation', 'Backend engineering', 'Product design', 'Technology equity partnerships'],
   telephone: [SITE.phone, SITE.phone2],
   contactPoint: [{ '@type': 'ContactPoint', contactType: 'customer support', email: SITE.email, telephone: SITE.phone, availableLanguage: ['English', 'Kannada', 'Hindi'] }],
