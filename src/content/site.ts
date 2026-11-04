@@ -19,7 +19,7 @@ export const SITE = {
 
 export type PageMeta = { title: string; description: string; path: string }
 export const META: Record<string, PageMeta> = {
-  '/': { path: '/', title: 'THE GX GROUP — Technology Partner for Founders | Build, Launch, Scale', description: 'We partner with founders and businesses to build apps, web platforms, SaaS and AI products — via equity partnership with reduced fees, or paid development. Based in Bengaluru.' },
+  '/': { path: '/', title: 'THE GX GROUP — App, Web, SaaS & AI Development Partner in Bengaluru', description: 'We partner with founders and businesses to build apps, web platforms, SaaS and AI products — via equity partnership with reduced fees, or paid development. Based in Bengaluru.' },
   '/about': { path: '/about', title: 'About THE GX GROUP — Technology Partnership Company', description: 'Who we are, what we believe and how THE GX GROUP partners with founders to turn viable ideas into technology products.' },
   '/capabilities': { path: '/capabilities', title: 'Capabilities — Apps, Web, SaaS, AI & Backend | THE GX GROUP', description: 'Mobile apps, websites and web apps, SaaS platforms, AI and automation, backend and infrastructure, product design and support.' },
   '/partnership-model': { path: '/partnership-model', title: 'Equity Partnership Model — Reduced Fee + Negotiated Equity | THE GX GROUP', description: 'How our technology-for-equity partnership works: reduced development fee, individually negotiated equity, defined support and selective evaluation.' },

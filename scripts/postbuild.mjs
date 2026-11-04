@@ -30,7 +30,7 @@ const org = {
   sameAs: [SITE.instagram, 'https://garudawnx.com'],
   knowsAbout: ['Mobile app development', 'Web application development', 'SaaS development', 'AI and automation', 'Backend engineering', 'Product design', 'Technology equity partnerships'],
   telephone: [SITE.phone, SITE.phone2],
-  contactPoint: [{ '@type': 'ContactPoint', contactType: 'customer support', email: SITE.email, telephone: SITE.phone, availableLanguage: ['English', 'Kannada', 'Hindi'] }],
+  contactPoint: [{ '@type': 'ContactPoint', contactType: 'sales', email: SITE.email, telephone: SITE.phone, areaServed: 'IN', availableLanguage: ['English', 'Kannada', 'Hindi'] }, { '@type': 'ContactPoint', contactType: 'customer support', telephone: SITE.phone2, areaServed: 'IN', availableLanguage: ['English', 'Kannada', 'Hindi'] }],
 }
 const website = { '@type': 'WebSite', '@id': `${SITE.url}/#website`, url: SITE.url + '/', name: SITE.name, publisher: { '@id': ORG_ID }, inLanguage: 'en-IN' }
 const faqLd = (items) => ({ '@type': 'FAQPage', mainEntity: items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
@@ -59,6 +59,8 @@ function head(p, m, extraLd) {
     `<title>${esc(m.title)}</title>`,
     `<meta name="description" content="${esc(m.description)}" />`,
     `<link rel="canonical" href="${url}" />`,
+    `<link rel="alternate" hreflang="en-in" href="${url}" />`, `<link rel="alternate" hreflang="x-default" href="${url}" />`,
+    `<meta name="geo.region" content="IN-KA" />`, `<meta name="geo.placename" content="Bengaluru" />`,
     `<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />`,
     `<meta property="og:type" content="website" />`, `<meta property="og:site_name" content="THE GX GROUP" />`, `<meta property="og:locale" content="en_IN" />`,
     `<meta property="og:title" content="${esc(m.title)}" />`, `<meta property="og:description" content="${esc(m.description)}" />`, `<meta property="og:url" content="${url}" />`,
@@ -115,7 +117,7 @@ fs.writeFileSync(path.join(DIST, 'llms.txt'), `# THE GX GROUP
 
 > ${SITE.description}
 
-Tagline: Build | Launch | Scale. A GarudawnX company (https://garudawnx.com). Website: ${SITE.url}. Email: ${SITE.email}. Call/WhatsApp (business): ${SITE.phone}. Phone: ${SITE.phone2}. Location: ${SITE.location}.
+Tagline: Build | Launch | Scale. A GarudawnX company (https://garudawnx.com). Website: ${SITE.url}. Email: ${SITE.email}. Call/WhatsApp (business): ${SITE.phone}. Phone: ${SITE.phone2}. Instagram: ${SITE.instagram}. Location: ${SITE.location}.
 
 ## What THE GX GROUP does
 THE GX GROUP is a technology partnership company. It designs, builds, launches and supports technology products for founders and businesses.
