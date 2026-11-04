@@ -1,0 +1,50 @@
+# THE GX GROUP
+
+> THE GX GROUP is a technology partnership company in Bengaluru. We build apps, web platforms, SaaS and AI products for founders and businesses — through equity partnerships or paid development.
+
+Tagline: Build | Launch | Scale. Website: https://thegxgroup.com. Email: hello@garudawnx.com. Phone/WhatsApp: +91 74118 29410. Location: Bengaluru, Karnataka, India.
+
+## What THE GX GROUP does
+THE GX GROUP is a technology partnership company. It designs, builds, launches and supports technology products for founders and businesses.
+
+## Two ways to work with THE GX GROUP
+- Partner With Us (technology + equity partnership): reduced development fee, individually negotiated equity, product development and agreed ongoing support. Applications are evaluated selectively; no fixed equity percentage is published and acceptance is not guaranteed. Apply: https://thegxgroup.com/partner-with-us
+- Technology Services (paid development): clearly scoped work, commercial quotation, agreed milestones, separate maintenance agreement. Request: https://thegxgroup.com/technology-services
+
+## Capabilities
+- Mobile Apps: Native-feel iOS & Android apps from one codebase. Deliverables: iOS & Android apps, Store submission, Push, payments, maps. Technologies: Flutter, React Native, Firebase.
+- Web & Web Apps: Fast, search-ready websites and web applications. Deliverables: Marketing sites, Customer portals, Dashboards. Technologies: React, Next.js, Vue, Tailwind.
+- SaaS Platforms: Multi-tenant products with billing and roles. Deliverables: Subscriptions & billing, Roles & permissions, Admin consoles. Technologies: PostgreSQL, Supabase, Stripe / Razorpay.
+- AI & Automation: LLM features and workflows that remove manual work. Deliverables: AI assistants & search, Document processing, Workflow automation. Technologies: LLM APIs, RAG, n8n / scripts.
+- Backend & Infra: Secure APIs, data and cloud that hold up under load. Deliverables: REST / GraphQL APIs, Auth & data security, CI/CD & monitoring. Technologies: Node.js, PostgreSQL, Cloud hosting.
+- Design & Support: Product design up front, technical support after launch. Deliverables: UX research & UI, Design systems, Maintenance & SLAs. Technologies: Figma, Analytics, Sentry.
+
+## Frequently asked questions
+- Q: What does THE GX GROUP do?
+  A: THE GX GROUP is a technology partnership company in Bengaluru. We design and build apps, web platforms, SaaS and AI products for founders and businesses.
+- Q: How does the equity partnership work?
+  A: For selected ventures we reduce our development fee in exchange for an equity stake. The percentage is negotiated individually, and responsibilities, support and costs are set out in a separate legal agreement.
+- Q: Can I just hire you for paid development?
+  A: Yes. Request a project consultation and we will scope the work, send a commercial quotation with milestones, and offer maintenance as a separate agreement.
+- Q: Is every partnership application accepted?
+  A: No. Applications are evaluated selectively on viability, founder commitment and technical fit. Submitting an application does not create any agreement.
+- Q: Who pays for third-party costs like hosting or app stores?
+  A: Third-party costs such as hosting, licences and store fees are allocated separately and agreed in writing before work starts.
+- Q: Do you publish a fixed equity percentage?
+  A: No. Equity is negotiated individually based on the venture, scope, risk and the reduced fee.
+- Q: Does applying guarantee a partnership?
+  A: No. Applications are evaluated selectively. Any partnership is created only by a signed legal agreement, never by this website.
+- Q: What happens after I apply?
+  A: We review your application, may shortlist it, contact you for a meeting and, if there is a fit, send a written proposal.
+
+## Pages
+- [Home](https://thegxgroup.com/): We partner with founders and businesses to build apps, web platforms, SaaS and AI products — via equity partnership with reduced fees, or paid development. Based in Bengaluru.
+- [About](https://thegxgroup.com/about): Who we are, what we believe and how THE GX GROUP partners with founders to turn viable ideas into technology products.
+- [Capabilities](https://thegxgroup.com/capabilities): Mobile apps, websites and web apps, SaaS platforms, AI and automation, backend and infrastructure, product design and support.
+- [Partnership Model](https://thegxgroup.com/partnership-model): How our technology-for-equity partnership works: reduced development fee, individually negotiated equity, defined support and selective evaluation.
+- [Our Work](https://thegxgroup.com/work): Selected real products and client projects built by THE GX GROUP, with clear status: live, in development or prototype.
+- [Partner With Us](https://thegxgroup.com/partner-with-us): Founders and startups: apply for a technology and equity partnership with THE GX GROUP. Five short steps.
+- [Technology Services](https://thegxgroup.com/technology-services): Hire THE GX GROUP for scoped, quoted development of apps, websites, SaaS, AI integrations and backend systems.
+- [Contact](https://thegxgroup.com/contact): Get in touch with THE GX GROUP in Bengaluru for partnerships, projects or general enquiries.
+- [Privacy Policy](https://thegxgroup.com/privacy-policy): How THE GX GROUP collects, uses, stores and protects information submitted through this website.
+- [Terms](https://thegxgroup.com/terms): Terms governing use of the THE GX GROUP website and submission of partnership or project enquiries.

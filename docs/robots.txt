@@ -1,0 +1,27 @@
+# THE GX GROUP
+User-agent: *
+Allow: /
+Disallow: /admin
+
+# AI answer engines are welcome to read public pages
+User-agent: GPTBot
+Allow: /
+Disallow: /admin
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://thegxgroup.com/sitemap.xml

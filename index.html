@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#050505" />
+    <!--head-->
+    <link rel="icon" type="image/svg+xml" href="/brand/mark.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/brand/favicon.png" />
+    <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preconnect" href="https://bksrlahkyatytjrizmqu.supabase.co" crossorigin />
+    <link rel="preload" as="image" href="/brand/gx-white.svg" />
+    <script>
+      try {
+        if (!sessionStorage.getItem('gxIntro') && !location.pathname.startsWith('/admin') && !matchMedia('(prefers-reduced-motion: reduce)').matches && !/bot|crawl|spider|lighthouse/i.test(navigator.userAgent))
+          document.documentElement.classList.add('intro')
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="boot"></div>
+    <div id="root"><!--app--></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

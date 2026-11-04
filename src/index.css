@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root, .theme-dark { --c-bg: 7 8 10; --c-surface: 17 19 23; --c-elev: 26 29 34; --c-ink: 255 255 255; --c-mute: 163 168 178; --c-line: 40 44 52; --grid: rgba(255,255,255,.05); color-scheme: dark; }
+.theme-light { --c-bg: 246 247 249; --c-surface: 255 255 255; --c-elev: 236 239 243; --c-ink: 7 8 10; --c-mute: 92 99 112; --c-line: 222 226 232; --grid: rgba(7,8,10,.05); color-scheme: light; }
+.theme-light, .theme-dark { background-color: rgb(var(--c-bg)); color: rgb(var(--c-ink)); }
+.theme-light .logo-auto { filter: invert(1) hue-rotate(180deg); }
+/* ambient brand light so dark sections never feel flat */
+.ambient { position: relative; isolation: isolate; }
+.ambient::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(60% 50% at 85% 0%, rgba(8,124,245,.16), transparent 70%), radial-gradient(50% 40% at 0% 100%, rgba(8,124,245,.10), transparent 70%); }
+html { background: rgb(var(--c-bg)); -webkit-text-size-adjust: 100%; }
+body { @apply bg-bg font-sans text-ink antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; }
+::selection { background: #087CF5; color: #fff; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+:focus-visible { outline: 2px solid #087CF5; outline-offset: 3px; }
+img { -webkit-user-drag: none; }
+
+/* boot cover: only shown when JS flags the intro, so crawlers always see content */
+#boot { display: none; }
+html.intro #boot { display: block; position: fixed; inset: 0; z-index: 99; background: #07080A; }
+
+.text-gradient { background: linear-gradient(100deg, rgb(var(--c-ink)) 0%, rgb(var(--c-ink)) 30%, #087CF5 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+.blueprint {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px; background-position: center;
+}
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+  background-size: 64px 64px; background-position: center top;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+}
+
+/* cursor spotlight cards */
+.spot { --mx: -200px; --my: -200px; }
+.spot::before {
+  content: ''; position: absolute; inset: -1px; pointer-events: none; opacity: 0; transition: opacity .4s;
+  background: radial-gradient(320px circle at var(--mx) var(--my), rgba(8,124,245,.55), transparent 60%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px;
+}
+.spot::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s;
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(8,124,245,.06), transparent 60%);
+}
+.spot:hover::before, .spot:hover::after { opacity: 1; }
+.spot > * { position: relative; z-index: 1; }
+
+/* diagonal blue slash — echoes the X in the mark */
+.cta-slash { position: absolute; right: -8%; top: -30%; width: 38%; height: 160%; background: linear-gradient(180deg, rgba(8,124,245,.0), rgba(8,124,245,.22) 50%, rgba(8,124,245,0)); transform: skewX(-38deg); pointer-events: none; }
+.cta-slash::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent, #087CF5, transparent); }
+
+.navlink { position: relative; }
+.navlink::after { content: ''; position: absolute; left: 0; bottom: -6px; height: 1px; width: 100%; background: #087CF5; transform: scaleX(0); transform-origin: right; transition: transform .45s cubic-bezier(.76,0,.24,1); }
+.navlink:hover::after, .navlink.is-active::after { transform: scaleX(1); transform-origin: left; }
+
+.marquee { animation: marquee 38s linear infinite; }
+@keyframes marquee { to { transform: translateX(-33.333%); } }
+
+.scroll-dot { width: 6px; height: 6px; background: #087CF5; transform: rotate(45deg); animation: bob 1.8s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(4px) rotate(45deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
