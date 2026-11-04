@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { PROJECT_TYPES, SITE } from '../content/site'
 import { Band, Button, Eyebrow, PageHero, Section } from '../components/ui'
 import { useMeta } from '../lib/seo'
-import { sb, track, uploadFiles } from '../lib/supabase'
+import { db, track, uploadFiles } from '../lib/supabase'
 
 type Vals = Record<string, string>
 const MAX = 10 * 1024 * 1024
@@ -127,7 +127,7 @@ export function PartnerWithUs() {
     setBusy(true); setErr('')
     try {
       const uploaded = await uploadFiles('partnership', [...deck.map((file) => ({ file, kind: 'pitch_deck' })), ...docs.map((file) => ({ file, kind: 'supporting' }))])
-      const { data, error } = await sb().rpc('submit_partnership_application', { payload: { ...f.v, consent: f.v.consent === 'true', documents: uploaded } })
+      const { data, error } = await (await db()).rpc('submit_partnership_application', { payload: { ...f.v, consent: f.v.consent === 'true', documents: uploaded } })
       if (error) throw new Error(error.message)
       track('partnership_form_submit'); setDone(data as { reference: string; duplicate: boolean })
     } catch (x) { setErr(errMsg((x as Error).message)) } finally { setBusy(false) }
@@ -191,7 +191,7 @@ export function TechnologyServices() {
     setBusy(true); setErr('')
     try {
       const uploaded = await uploadFiles('service', docs.map((file) => ({ file })))
-      const { data, error } = await sb().rpc('submit_service_enquiry', { payload: { ...f.v, consent: f.v.consent === 'true', documents: uploaded } })
+      const { data, error } = await (await db()).rpc('submit_service_enquiry', { payload: { ...f.v, consent: f.v.consent === 'true', documents: uploaded } })
       if (error) throw new Error(error.message)
       track('service_form_submit'); setDone(data as { reference: string; duplicate: boolean }); window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch (x) { setErr(errMsg((x as Error).message)) } finally { setBusy(false) }
@@ -232,7 +232,7 @@ export function Contact() {
   async function submit(e: React.FormEvent) {
     e.preventDefault(); const er = check(f.v, ['name', 'email', 'message', 'consent']); f.setE(er); if (Object.values(er).some(Boolean)) return
     setBusy(true); setErr('')
-    const { error } = await sb().rpc('submit_contact', { payload: { ...f.v, consent: f.v.consent === 'true' } })
+    const { error } = await (await db()).rpc('submit_contact', { payload: { ...f.v, consent: f.v.consent === 'true' } })
     setBusy(false); if (error) return setErr(errMsg(error.message)); track('contact_submit'); setDone(true)
   }
   const p = { v: f.v, set: f.set }

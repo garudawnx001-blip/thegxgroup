@@ -13,7 +13,7 @@
     <link rel="preload" as="image" href="/brand/gx-white.svg" />
     <script>
       try {
-        if (!sessionStorage.getItem('gxIntro') && !location.pathname.startsWith('/admin') && !matchMedia('(prefers-reduced-motion: reduce)').matches && !/bot|crawl|spider|lighthouse/i.test(navigator.userAgent))
+        if (!sessionStorage.getItem('gxIntro') && !matchMedia('(prefers-reduced-motion: reduce)').matches && !/bot|crawl|spider|lighthouse/i.test(navigator.userAgent))
           document.documentElement.classList.add('intro')
       } catch (e) {}
     </script>

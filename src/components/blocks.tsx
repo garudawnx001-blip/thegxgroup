@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { sb, track } from '../lib/supabase'
+import { db, track } from '../lib/supabase'
 import { Button, Eyebrow, MaskText, Reveal, Section, SpotCard } from './ui'
 
 const PATHS = [
@@ -70,7 +70,7 @@ export const STATUS_LABEL: Record<string, string> = { live: 'Live', in_developme
 export function usePortfolio() {
   const [rows, setRows] = useState<Portfolio[] | null>(null)
   useEffect(() => {
-    sb().from('portfolio_projects').select('*').eq('published', true).order('sort_order').then(({ data }) => setRows((data as Portfolio[]) ?? []))
+    db().then((c) => c.from('portfolio_projects').select('*').eq('published', true).order('sort_order')).then(({ data }) => setRows((data as Portfolio[]) ?? []))
   }, [])
   return rows
 }

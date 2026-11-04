@@ -5,7 +5,7 @@ import { CAPABILITIES, PARTNERSHIP_POINTS, PROCESS, SITE } from '../content/site
 import { Band, Button, Eyebrow, MaskText, PageHero, Reveal, Section, SpotCard } from '../components/ui'
 import { Faq, STATUS_LABEL, TwoPaths, WorkCard, usePortfolio, type Portfolio } from '../components/blocks'
 import { useMeta } from '../lib/seo'
-import { sb, track } from '../lib/supabase'
+import { db, track } from '../lib/supabase'
 
 export function About() {
   useMeta('/about')
@@ -146,7 +146,7 @@ export function Work() {
 export function WorkDetail() {
   const { slug } = useParams()
   const [p, setP] = useState<Portfolio | null | undefined>(undefined)
-  useEffect(() => { sb().from('portfolio_projects').select('*').eq('slug', slug!).eq('published', true).maybeSingle().then(({ data }) => setP(data as Portfolio | null)) }, [slug])
+  useEffect(() => { db().then((c) => c.from('portfolio_projects').select('*').eq('slug', slug!).eq('published', true).maybeSingle()).then(({ data }) => setP(data as Portfolio | null)) }, [slug])
   useMeta(`/work/${slug}`, p ? { title: `${p.name} — ${p.category} | THE GX GROUP`, description: p.description.slice(0, 155) } : undefined)
   if (p === undefined) return <Section className="pt-44"><div className="h-64 animate-pulse bg-surface" /></Section>
   if (!p) return <NotFound />

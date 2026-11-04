@@ -2,7 +2,7 @@ import type { Session } from '@supabase/supabase-js'
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, NavLink, Navigate, Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import { PARTNERSHIP_STATUSES, SERVICE_STATUSES, label } from '../content/site'
-import { sb } from '../lib/supabase'
+import { sb } from '../lib/sb'
 import { Area, Badge, Btn, Card, Empty, H, In, KV, Sel, fmtDT, fmtDate, inputCls, toCSV } from './kit'
 
 type Row = Record<string, any> // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -14,6 +14,7 @@ function useAuth() {
     let m = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null
     if (!m) { m = document.createElement('meta'); m.name = 'robots'; document.head.appendChild(m) }
     m.content = 'noindex,nofollow,noarchive'; document.title = 'Sign in'
+    document.documentElement.classList.remove('intro'); document.getElementById('boot')?.remove()
     sb().auth.getSession().then(({ data }) => setSession(data.session))
     const { data } = sb().auth.onAuthStateChange((_e, s) => setSession(s))
     return () => data.subscription.unsubscribe()

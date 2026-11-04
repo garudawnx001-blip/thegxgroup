@@ -23,12 +23,12 @@ export function ParticleMark({ className = '' }: { className?: string }) {
     const build = () => {
       if (!imgs) return
       const r = cv.getBoundingClientRect(); w = r.width; h = r.height
-      dpr = Math.min(devicePixelRatio || 1, 2)
+      dpr = Math.min(devicePixelRatio || 1, w < 640 ? 1.5 : 2)
       cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       const mobile = w < 640
       const mw = Math.min(w * (mobile ? 0.82 : 0.6), (h * 0.8) * (508 / 205), 640); const mh = mw * (205 / 508)
       const ox = (w - mw) / 2, oy = (h - mh) / 2
-      const step = mobile ? 4 : w < 1024 ? 5 : 4
+      const step = mobile ? 5 : w < 1024 ? 5 : 4
       const off = document.createElement('canvas'); off.width = Math.ceil(mw); off.height = Math.ceil(mh)
       const o = off.getContext('2d', { willReadFrequently: true })!
       const sample = (img: HTMLImageElement, x: number, y: number, iw: number, ih: number, blue: boolean) => {
@@ -81,7 +81,17 @@ export function ParticleMark({ className = '' }: { className?: string }) {
 
     const onMove = (e: PointerEvent) => { const r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top }
     const onLeave = () => { mouse.x = mouse.y = -9999 }
-    const onScroll = () => { scroll = Math.max(0, window.scrollY / (window.innerHeight * 0.9)) }
+    // Coming back up to the hero replays the same assembly you see on load.
+    let away = false
+    const scatter = () => {
+      for (const p of pts) { const a = Math.random() * Math.PI * 2, rr = Math.max(w, h) * (0.4 + Math.random() * 0.6); p.x = w / 2 + Math.cos(a) * rr; p.y = h / 2 + Math.sin(a) * rr; p.vx = p.vy = 0 }
+      t0 = performance.now()
+    }
+    const onScroll = () => {
+      scroll = Math.max(0, window.scrollY / (window.innerHeight * 0.9))
+      if (scroll >= 1) away = true
+      else if (away && scroll < 0.75) { away = false; if (!reduce) scatter() }
+    }
     const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting })
     const vis = () => { visible = document.visibilityState === 'visible' }
     let rt = 0; const onResize = () => { clearTimeout(rt); rt = window.setTimeout(build, 150) }
