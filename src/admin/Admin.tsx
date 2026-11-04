@@ -11,6 +11,9 @@ function useAuth() {
   const [session, setSession] = useState<Session | null | undefined>(undefined)
   const [admin, setAdmin] = useState<boolean | undefined>(undefined)
   useEffect(() => {
+    let m = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null
+    if (!m) { m = document.createElement('meta'); m.name = 'robots'; document.head.appendChild(m) }
+    m.content = 'noindex,nofollow,noarchive'; document.title = 'Sign in'
     sb().auth.getSession().then(({ data }) => setSession(data.session))
     const { data } = sb().auth.onAuthStateChange((_e, s) => setSession(s))
     return () => data.subscription.unsubscribe()
@@ -28,8 +31,8 @@ export default function Admin() {
   if (session === undefined || (session && admin === undefined)) return <div className="flex min-h-screen items-center justify-center text-sm text-mute">Loading…</div>
   return (
     <Routes>
-      <Route path="login" element={session && admin ? <Navigate to="/admin" replace /> : <Login denied={!!session && !admin} />} />
-      <Route path="*" element={session && admin ? <Shell /> : <Navigate to="/admin/login" replace />} />
+      <Route path="login" element={session && admin ? <Navigate to="/gx-console-fsdj84qteyv9" replace /> : <Login denied={!!session && !admin} />} />
+      <Route path="*" element={session && admin ? <Shell /> : <Navigate to="/gx-console-fsdj84qteyv9/login" replace />} />
     </Routes>
   )
 }
@@ -38,7 +41,7 @@ function Login({ denied }: { denied: boolean }) {
   const [email, setEmail] = useState(''); const [pw, setPw] = useState(''); const [err, setErr] = useState(denied ? 'This account does not have admin access.' : ''); const [busy, setBusy] = useState(false); const [mode, setMode] = useState<'login' | 'reset'>('login'); const [msg, setMsg] = useState('')
   async function go(e: React.FormEvent) {
     e.preventDefault(); setBusy(true); setErr(''); setMsg('')
-    if (mode === 'reset') { const { error } = await sb().auth.resetPasswordForEmail(email, { redirectTo: `${location.origin}/admin/settings` }); setBusy(false); return error ? setErr(error.message) : setMsg('If that account exists, a reset link has been sent.') }
+    if (mode === 'reset') { const { error } = await sb().auth.resetPasswordForEmail(email, { redirectTo: `${location.origin}/gx-console-fsdj84qteyv9/settings` }); setBusy(false); return error ? setErr(error.message) : setMsg('If that account exists, a reset link has been sent.') }
     const { error } = await sb().auth.signInWithPassword({ email, password: pw }); setBusy(false); if (error) setErr('Invalid email or password.')
   }
   return (
@@ -68,7 +71,7 @@ function Shell() {
       <aside className={`fixed inset-y-0 left-0 z-40 w-[240px] border-r border-line bg-surface p-5 transition-transform lg:static lg:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
         <Link to="/"><img src="/brand/logo.svg" alt="THE GX GROUP" className="h-8 w-auto" /></Link>
         <nav className="mt-10 space-y-1" onClick={() => setOpen(false)}>
-          {NAV.map(([to, l]) => <NavLink key={to} end to={`/admin/${to}`.replace(/\/$/, '')} className={({ isActive }) => `block px-3 py-2 text-sm ${isActive ? 'bg-elev text-ink' : 'text-mute hover:text-ink'}`}>{l}</NavLink>)}
+          {NAV.map(([to, l]) => <NavLink key={to} end to={`/gx-console-fsdj84qteyv9/${to}`.replace(/\/$/, '')} className={({ isActive }) => `block px-3 py-2 text-sm ${isActive ? 'bg-elev text-ink' : 'text-mute hover:text-ink'}`}>{l}</NavLink>)}
         </nav>
         <button onClick={() => sb().auth.signOut()} className="absolute bottom-5 left-5 text-xs text-mute hover:text-ink">Sign out</button>
       </aside>
@@ -90,7 +93,7 @@ function Shell() {
             <Route path="portfolio" element={<PortfolioAdmin />} />
             <Route path="contacts" element={<Contacts />} />
             <Route path="settings" element={<Settings />} />
-            <Route path="*" element={<Navigate to="/admin" replace />} />
+            <Route path="*" element={<Navigate to="/gx-console-fsdj84qteyv9" replace />} />
           </Routes>
         </main>
       </div>
@@ -118,10 +121,10 @@ function Dashboard() {
     <>
       <H t="Dashboard" sub="All figures are live from the database." />
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        {s ? tiles.map(([l, v, to]) => <Link key={l} to={`/admin/${to}`} className="border border-line bg-surface p-5 transition-colors hover:border-accent"><p className="text-xs text-mute">{l}</p><p className="mt-3 font-display text-2xl font-bold sm:text-3xl">{v}</p></Link>) : Array.from({ length: 8 }).map((_, i) => <div key={i} className="h-24 animate-pulse bg-surface" />)}
+        {s ? tiles.map(([l, v, to]) => <Link key={l} to={`/gx-console-fsdj84qteyv9/${to}`} className="border border-line bg-surface p-5 transition-colors hover:border-accent"><p className="text-xs text-mute">{l}</p><p className="mt-3 font-display text-2xl font-bold sm:text-3xl">{v}</p></Link>) : Array.from({ length: 8 }).map((_, i) => <div key={i} className="h-24 animate-pulse bg-surface" />)}
       </div>
       <h2 className="mb-3 mt-10 font-display text-sm font-semibold">Recent activity</h2>
-      {recent.length ? <div className="divide-y divide-line border border-line">{recent.map((n) => <Link key={n.id} to={n.ref_table === 'partnership_applications' ? `/admin/applications/${n.ref_id}` : n.ref_table === 'service_enquiries' ? `/admin/enquiries/${n.ref_id}` : '/admin/contacts'} className="flex items-center justify-between gap-4 px-4 py-3 text-sm hover:bg-surface"><span>{n.title}</span><span className="shrink-0 text-xs text-mute">{fmtDT(n.created_at)}</span></Link>)}</div> : <Empty t="No submissions yet." />}
+      {recent.length ? <div className="divide-y divide-line border border-line">{recent.map((n) => <Link key={n.id} to={n.ref_table === 'partnership_applications' ? `/gx-console-fsdj84qteyv9/applications/${n.ref_id}` : n.ref_table === 'service_enquiries' ? `/gx-console-fsdj84qteyv9/enquiries/${n.ref_id}` : '/gx-console-fsdj84qteyv9/contacts'} className="flex items-center justify-between gap-4 px-4 py-3 text-sm hover:bg-surface"><span>{n.title}</span><span className="shrink-0 text-xs text-mute">{fmtDT(n.created_at)}</span></Link>)}</div> : <Empty t="No submissions yet." />}
     </>
   )
 }
@@ -166,8 +169,8 @@ function Pipeline({ kind }: { kind: 'partnership' | 'service' }) {
               {list.map((r) => (
                 <tr key={r.id} className="hover:bg-surface">
                   <td className="p-3"><input type="checkbox" aria-label={`Select ${r.reference}`} checked={sel.has(r.id)} onChange={(e) => { const n = new Set(sel); e.target.checked ? n.add(r.id) : n.delete(r.id); setSel(n) }} /></td>
-                  <td className="p-3 font-mono text-xs"><Link to={`/admin/${c.base}/${r.id}`} className="hover:text-accent">{r.reference}</Link>{r.is_duplicate && <span className="ml-2 text-[10px] text-amber-300">DUP</span>}</td>
-                  <td className="p-3"><Link to={`/admin/${c.base}/${r.id}`} className="hover:text-accent">{c.who(r)}</Link><p className="text-xs text-mute">{r.email}</p></td>
+                  <td className="p-3 font-mono text-xs"><Link to={`/gx-console-fsdj84qteyv9/${c.base}/${r.id}`} className="hover:text-accent">{r.reference}</Link>{r.is_duplicate && <span className="ml-2 text-[10px] text-amber-300">DUP</span>}</td>
+                  <td className="p-3"><Link to={`/gx-console-fsdj84qteyv9/${c.base}/${r.id}`} className="hover:text-accent">{c.who(r)}</Link><p className="text-xs text-mute">{r.email}</p></td>
                   <td className="p-3">{c.what(r)}</td><td className="p-3 text-mute">{c.extra(r)}</td><td className="p-3"><Badge s={r.status} /></td><td className="p-3 text-mute">{fmtDate(r.created_at)}</td>
                 </tr>
               ))}
@@ -238,11 +241,11 @@ function ApplicationDetail() {
   if (!r) return <p className="text-sm text-mute">Loading…</p>
   const toPartnership = async () => {
     const { data, error } = await sb().from('partnerships').insert({ application_id: r.id, founder_name: r.founder_name, founder_email: r.email, business_name: r.business_name, business_details: `${r.industry} · ${r.stage}\n${r.description}` }).select('id').single()
-    if (!error && data) { await sb().from('partnership_terms').insert({ partnership_id: data.id }); nav(`/admin/partnerships/${data.id}`) }
+    if (!error && data) { await sb().from('partnership_terms').insert({ partnership_id: data.id }); nav(`/gx-console-fsdj84qteyv9/partnerships/${data.id}`) }
   }
   return (
     <>
-      <Link to="/admin/applications" className="text-xs text-mute hover:text-ink">← Applications</Link>
+      <Link to="/gx-console-fsdj84qteyv9/applications" className="text-xs text-mute hover:text-ink">← Applications</Link>
       <H t={r.business_name} sub={`${r.reference} · ${r.founder_name} · received ${fmtDT(r.created_at)}${r.is_duplicate ? ' · possible duplicate' : ''}`} right={r.status === 'accepted' && <Btn onClick={toPartnership}>Create partnership record</Btn>} />
       <Card className="mb-4"><p className="mb-3 text-xs text-mute">Status (every change is logged)</p><StatusBar table="partnership_applications" r={r} statuses={PARTNERSHIP_STATUSES} onChange={() => { load(); setTick(tick + 1) }} /></Card>
       <div className="grid gap-4 xl:grid-cols-[1.3fr_1fr]">
@@ -252,7 +255,7 @@ function ApplicationDetail() {
           <Card><h3 className="text-sm font-semibold">Technology & partnership</h3><dl><KV k="Requirements" v={r.requirements} /><KV k="Features" v={r.features} /><KV k="Estimated budget" v={r.estimated_budget} /><KV k="Equity openness" v={r.equity_openness} /><KV k="Co-founders" v={r.cofounders} /><KV k="Additional details" v={r.additional_details} /><KV k="Consent recorded" v={fmtDT(r.consent_at)} /></dl></Card>
         </div>
         <div className="space-y-4"><Docs table="partnership_documents" fk="application_id" id={r.id} /><FollowUpBox fk="application_id" id={r.id} /><Notes table="partnership_notes" fk="application_id" id={r.id} /><Activity table="partnership_activity" fk="application_id" id={r.id} reload={tick} />
-          <Btn kind="danger" onClick={async () => { if (confirm('Archive this application?')) { await sb().from('partnership_applications').update({ archived: true }).eq('id', r.id); nav('/admin/applications') } }}>Archive</Btn></div>
+          <Btn kind="danger" onClick={async () => { if (confirm('Archive this application?')) { await sb().from('partnership_applications').update({ archived: true }).eq('id', r.id); nav('/gx-console-fsdj84qteyv9/applications') } }}>Archive</Btn></div>
       </div>
     </>
   )
@@ -263,10 +266,10 @@ function EnquiryDetail() {
   const [r, load, setR] = useRecord('service_enquiries', id); const [tick, setTick] = useState(0); const [saved, setSaved] = useState(false)
   if (!r) return <p className="text-sm text-mute">Loading…</p>
   const saveQuote = async () => { await sb().from('service_enquiries').update({ internal_estimate: r.internal_estimate || null, estimated_effort: r.estimated_effort, quotation_amount: r.quotation_amount || null, quotation_notes: r.quotation_notes }).eq('id', r.id); setSaved(true); setTimeout(() => setSaved(false), 1500) }
-  const toProject = async () => { const { data } = await sb().from('projects').insert({ enquiry_id: r.id, name: r.project_name, kind: 'paid', scope: r.description, deliverables: r.features }).select('id').single(); if (data) nav(`/admin/projects/${data.id}`) }
+  const toProject = async () => { const { data } = await sb().from('projects').insert({ enquiry_id: r.id, name: r.project_name, kind: 'paid', scope: r.description, deliverables: r.features }).select('id').single(); if (data) nav(`/gx-console-fsdj84qteyv9/projects/${data.id}`) }
   return (
     <>
-      <Link to="/admin/enquiries" className="text-xs text-mute hover:text-ink">← Service enquiries</Link>
+      <Link to="/gx-console-fsdj84qteyv9/enquiries" className="text-xs text-mute hover:text-ink">← Service enquiries</Link>
       <H t={r.project_name} sub={`${r.reference} · ${r.name}${r.company ? ` · ${r.company}` : ''} · received ${fmtDT(r.created_at)}${r.is_duplicate ? ' · possible duplicate' : ''}`} right={r.status === 'won' && <Btn onClick={toProject}>Convert to project</Btn>} />
       <Card className="mb-4"><p className="mb-3 text-xs text-mute">Status (every change is logged)</p><StatusBar table="service_enquiries" r={r} statuses={SERVICE_STATUSES} onChange={() => { load(); setTick(tick + 1) }} /></Card>
       <div className="grid gap-4 xl:grid-cols-[1.3fr_1fr]">
@@ -276,7 +279,7 @@ function EnquiryDetail() {
           <Card><h3 className="mb-3 text-sm font-semibold">Estimate & quotation (internal)</h3><div className="grid gap-3 sm:grid-cols-2"><In l="Internal estimate (₹)" type="number" value={r.internal_estimate ?? ''} onChange={(e) => setR({ ...r, internal_estimate: e.target.value })} /><In l="Expected effort" value={r.estimated_effort ?? ''} onChange={(e) => setR({ ...r, estimated_effort: e.target.value })} placeholder="e.g. 6 weeks, 2 devs" /><In l="Quotation amount (₹)" type="number" value={r.quotation_amount ?? ''} onChange={(e) => setR({ ...r, quotation_amount: e.target.value })} /><div className="sm:col-span-2"><Area l="Quotation notes" value={r.quotation_notes ?? ''} onChange={(e) => setR({ ...r, quotation_notes: e.target.value })} /></div></div><div className="mt-3 flex items-center gap-3"><Btn onClick={saveQuote}>Save</Btn>{saved && <span className="text-xs text-emerald-300">Saved</span>}</div></Card>
         </div>
         <div className="space-y-4"><Docs table="service_documents" fk="enquiry_id" id={r.id} /><FollowUpBox fk="enquiry_id" id={r.id} /><Notes table="service_notes" fk="enquiry_id" id={r.id} /><Activity table="service_activity" fk="enquiry_id" id={r.id} reload={tick} />
-          <Btn kind="danger" onClick={async () => { if (confirm('Archive this enquiry?')) { await sb().from('service_enquiries').update({ archived: true }).eq('id', r.id); nav('/admin/enquiries') } }}>Archive</Btn></div>
+          <Btn kind="danger" onClick={async () => { if (confirm('Archive this enquiry?')) { await sb().from('service_enquiries').update({ archived: true }).eq('id', r.id); nav('/gx-console-fsdj84qteyv9/enquiries') } }}>Archive</Btn></div>
       </div>
     </>
   )
@@ -294,7 +297,7 @@ function FollowUps() {
         const pa = r.partnership_applications, se = r.service_enquiries; const over = !r.completed && r.due_date < today
         return <div key={r.id} className="flex flex-wrap items-center gap-4 px-4 py-3 text-sm"><input type="checkbox" checked={r.completed} onChange={async () => { await sb().from('follow_ups').update({ completed: !r.completed, completed_at: r.completed ? null : new Date().toISOString() }).eq('id', r.id); load() }} />
           <span className={`w-28 ${over ? 'font-semibold text-red-300' : 'text-mute'}`}>{fmtDate(r.due_date)}{over && ' · overdue'}</span><span className="w-20 text-mute">{r.method}</span>
-          <Link to={pa ? `/admin/applications/${r.application_id}` : `/admin/enquiries/${r.enquiry_id}`} className="flex-1 hover:text-accent">{pa ? `${pa.reference} · ${pa.business_name}` : se ? `${se.reference} · ${se.project_name}` : '—'}{r.notes && <span className="text-mute"> — {r.notes}</span>}</Link><span className="text-xs text-mute">{r.responsible}</span></div>
+          <Link to={pa ? `/gx-console-fsdj84qteyv9/applications/${r.application_id}` : `/gx-console-fsdj84qteyv9/enquiries/${r.enquiry_id}`} className="flex-1 hover:text-accent">{pa ? `${pa.reference} · ${pa.business_name}` : se ? `${se.reference} · ${se.project_name}` : '—'}{r.notes && <span className="text-mute"> — {r.notes}</span>}</Link><span className="text-xs text-mute">{r.responsible}</span></div>
       })}</div> : <Empty t="Nothing scheduled." />}
     </>
   )
@@ -303,11 +306,11 @@ function FollowUps() {
 function SimpleList({ table, title, base, cols, newRow }: { table: string; title: string; base: string; cols: [string, (r: Row) => ReactNode][]; newRow?: Row }) {
   const [rows, setRows] = useState<Row[] | null>(null); const nav = useNavigate()
   useEffect(() => { sb().from(table).select('*').eq('archived', false).order('created_at', { ascending: false }).then(({ data }) => setRows(data ?? [])) }, [table])
-  const create = async () => { const { data } = await sb().from(table).insert(newRow!).select('id').single(); if (data) nav(`/admin/${base}/${data.id}`) }
+  const create = async () => { const { data } = await sb().from(table).insert(newRow!).select('id').single(); if (data) nav(`/gx-console-fsdj84qteyv9/${base}/${data.id}`) }
   return (
     <>
       <H t={title} right={newRow && <Btn onClick={create}>New</Btn>} />
-      {rows && !rows.length ? <Empty t="No records yet." /> : <div className="overflow-x-auto border border-line"><table className="w-full min-w-[600px] text-left text-sm"><thead className="bg-surface text-[11px] uppercase tracking-wider text-mute"><tr>{cols.map(([h]) => <th key={h} className="p-3">{h}</th>)}</tr></thead><tbody className="divide-y divide-line">{(rows ?? []).map((r) => <tr key={r.id} onClick={() => nav(`/admin/${base}/${r.id}`)} className="cursor-pointer hover:bg-surface">{cols.map(([h, f]) => <td key={h} className="p-3">{f(r)}</td>)}</tr>)}</tbody></table></div>}
+      {rows && !rows.length ? <Empty t="No records yet." /> : <div className="overflow-x-auto border border-line"><table className="w-full min-w-[600px] text-left text-sm"><thead className="bg-surface text-[11px] uppercase tracking-wider text-mute"><tr>{cols.map(([h]) => <th key={h} className="p-3">{h}</th>)}</tr></thead><tbody className="divide-y divide-line">{(rows ?? []).map((r) => <tr key={r.id} onClick={() => nav(`/gx-console-fsdj84qteyv9/${base}/${r.id}`)} className="cursor-pointer hover:bg-surface">{cols.map(([h, f]) => <td key={h} className="p-3">{f(r)}</td>)}</tr>)}</tbody></table></div>}
     </>
   )
 }
@@ -332,10 +335,10 @@ function PartnershipDetail() {
   const openDoc = async (path: string) => { const { data } = await sb().storage.from('uploads').createSignedUrl(path, 120); if (data) window.open(data.signedUrl, '_blank', 'noopener') }
   return (
     <>
-      <Link to="/admin/partnerships" className="text-xs text-mute hover:text-ink">← Partnerships</Link>
+      <Link to="/gx-console-fsdj84qteyv9/partnerships" className="text-xs text-mute hover:text-ink">← Partnerships</Link>
       <H t={p.business_name} sub="Status here is for internal tracking only — it does not issue shares or complete any legal transaction." right={<div className="flex items-center gap-3">{msg && <span className="text-xs text-emerald-300">{msg}</span>}<Btn onClick={save}>Save</Btn></div>} />
       <div className="grid gap-4 xl:grid-cols-2">
-        <Card><h3 className="mb-3 text-sm font-semibold">Founder & business</h3><div className="grid gap-3 sm:grid-cols-2"><In l="Founder" value={p.founder_name ?? ''} onChange={(e) => setP({ ...p, founder_name: e.target.value })} /><In l="Founder email" value={p.founder_email ?? ''} onChange={(e) => setP({ ...p, founder_email: e.target.value })} /><In l="Business" value={p.business_name ?? ''} onChange={(e) => setP({ ...p, business_name: e.target.value })} /><Sel l="Approval / issuance" value={p.approval_status} onChange={(v) => setP({ ...p, approval_status: v })} opts={['draft', 'terms_agreed', 'agreement_signed', 'board_approved', 'shares_issued', 'terminated']} /><div className="sm:col-span-2"><Area l="Business details" value={p.business_details ?? ''} onChange={(e) => setP({ ...p, business_details: e.target.value })} /></div><div className="sm:col-span-2"><Area l="Support obligations" value={p.support_obligations ?? ''} onChange={(e) => setP({ ...p, support_obligations: e.target.value })} /></div></div>{p.application_id && <Link to={`/admin/applications/${p.application_id}`} className="mt-3 inline-block text-xs text-accent">View original application →</Link>}</Card>
+        <Card><h3 className="mb-3 text-sm font-semibold">Founder & business</h3><div className="grid gap-3 sm:grid-cols-2"><In l="Founder" value={p.founder_name ?? ''} onChange={(e) => setP({ ...p, founder_name: e.target.value })} /><In l="Founder email" value={p.founder_email ?? ''} onChange={(e) => setP({ ...p, founder_email: e.target.value })} /><In l="Business" value={p.business_name ?? ''} onChange={(e) => setP({ ...p, business_name: e.target.value })} /><Sel l="Approval / issuance" value={p.approval_status} onChange={(v) => setP({ ...p, approval_status: v })} opts={['draft', 'terms_agreed', 'agreement_signed', 'board_approved', 'shares_issued', 'terminated']} /><div className="sm:col-span-2"><Area l="Business details" value={p.business_details ?? ''} onChange={(e) => setP({ ...p, business_details: e.target.value })} /></div><div className="sm:col-span-2"><Area l="Support obligations" value={p.support_obligations ?? ''} onChange={(e) => setP({ ...p, support_obligations: e.target.value })} /></div></div>{p.application_id && <Link to={`/gx-console-fsdj84qteyv9/applications/${p.application_id}`} className="mt-3 inline-block text-xs text-accent">View original application →</Link>}</Card>
         <Card><h3 className="mb-3 text-sm font-semibold">Commercial & equity terms</h3><div className="grid gap-3 sm:grid-cols-2"><In l="Development fee (₹)" type="number" value={t.development_fee ?? ''} onChange={(e) => setT({ ...t, development_fee: e.target.value })} /><In l="Negotiated equity %" type="number" step="0.01" min="0" max="100" value={t.equity_percentage ?? ''} onChange={(e) => setT({ ...t, equity_percentage: e.target.value })} /><In l="Share class" value={t.share_class ?? ''} onChange={(e) => setT({ ...t, share_class: e.target.value })} /><In l="Proposed issuance" value={t.issuance_details ?? ''} onChange={(e) => setT({ ...t, issuance_details: e.target.value })} /><div className="sm:col-span-2"><Area l="Agreed commercial terms" value={t.commercial_terms ?? ''} onChange={(e) => setT({ ...t, commercial_terms: e.target.value })} /></div></div></Card>
         <Card><h3 className="mb-3 text-sm font-semibold">Agreement documents</h3><input type="file" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} className="text-xs" /><ul className="mt-3 space-y-2">{ags.map((a) => <li key={a.id} className="text-sm">{a.path ? <button onClick={() => openDoc(a.path)} className="text-accent hover:underline">{a.title}</button> : a.title} <span className="text-xs text-mute">· {fmtDate(a.created_at)}</span></li>)}</ul></Card>
         <LinkedProjects field="partnership_id" id={p.id} name={p.business_name} kind="partnership" />
@@ -346,8 +349,8 @@ function PartnershipDetail() {
 
 function LinkedProjects({ field, id, name, kind }: { field: string; id: string; name: string; kind: string }) {
   const [rows] = useChildren('projects', field, id); const nav = useNavigate()
-  const create = async () => { const { data } = await sb().from('projects').insert({ [field]: id, name, kind }).select('id').single(); if (data) nav(`/admin/projects/${data.id}`) }
-  return <Card><div className="mb-3 flex items-center justify-between"><h3 className="text-sm font-semibold">Linked projects</h3><Btn kind="ghost" onClick={create}>New project</Btn></div>{rows.length ? rows.map((r) => <Link key={r.id} to={`/admin/projects/${r.id}`} className="block border-t border-line py-2 text-sm hover:text-accent">{r.name} · <span className="text-mute">{label(r.dev_status)}</span></Link>) : <p className="text-sm text-mute">None yet.</p>}</Card>
+  const create = async () => { const { data } = await sb().from('projects').insert({ [field]: id, name, kind }).select('id').single(); if (data) nav(`/gx-console-fsdj84qteyv9/projects/${data.id}`) }
+  return <Card><div className="mb-3 flex items-center justify-between"><h3 className="text-sm font-semibold">Linked projects</h3><Btn kind="ghost" onClick={create}>New project</Btn></div>{rows.length ? rows.map((r) => <Link key={r.id} to={`/gx-console-fsdj84qteyv9/projects/${r.id}`} className="block border-t border-line py-2 text-sm hover:text-accent">{r.name} · <span className="text-mute">{label(r.dev_status)}</span></Link>) : <p className="text-sm text-mute">None yet.</p>}</Card>
 }
 
 const DEV = ['planning', 'in_progress', 'testing', 'launched', 'support', 'paused']
@@ -364,7 +367,7 @@ function ProjectDetail() {
   const save = async () => { const { id: _i, created_at: _c, updated_at: _u, ...rest } = p; await sb().from('projects').update({ ...rest, start_date: rest.start_date || null, target_date: rest.target_date || null }).eq('id', p.id); setMsg('Saved'); setTimeout(() => setMsg(''), 1500) }
   return (
     <>
-      <Link to="/admin/projects" className="text-xs text-mute hover:text-ink">← Projects</Link>
+      <Link to="/gx-console-fsdj84qteyv9/projects" className="text-xs text-mute hover:text-ink">← Projects</Link>
       <H t={p.name} right={<div className="flex items-center gap-3">{msg && <span className="text-xs text-emerald-300">{msg}</span>}<Btn onClick={save}>Save</Btn></div>} />
       <div className="grid gap-4 xl:grid-cols-[1.3fr_1fr]">
         <Card><div className="grid gap-3 sm:grid-cols-2">{F('name', 'Name')}<Sel l="Development status" value={p.dev_status} onChange={(v) => setP({ ...p, dev_status: v })} opts={DEV} /><Sel l="Type" value={p.kind} onChange={(v) => setP({ ...p, kind: v })} opts={['paid', 'partnership', 'internal']} />{F('team_members', 'Team members')}{F('start_date', 'Start date', false, 'date')}{F('target_date', 'Target date', false, 'date')}<div className="sm:col-span-2">{F('scope', 'Scope', true)}</div><div className="sm:col-span-2">{F('deliverables', 'Deliverables', true)}</div>{F('dependencies', 'Dependencies', true)}{F('issues', 'Issues', true)}<label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={p.launch_ready} onChange={(e) => setP({ ...p, launch_ready: e.target.checked })} /> Launch ready</label></div></Card>
@@ -373,7 +376,7 @@ function ProjectDetail() {
             <ul className="mt-3 space-y-2">{ms.map((x) => <li key={x.id} className="flex items-center gap-3 border-t border-line pt-2 text-sm"><input type="checkbox" checked={x.done} onChange={async () => { await sb().from('milestones').update({ done: !x.done }).eq('id', x.id); loadMs() }} /><span className={x.done ? 'text-mute line-through' : ''}>{x.title}</span><span className="ml-auto text-xs text-mute">{fmtDate(x.due_date)}</span></li>)}</ul></Card>
           <Card><h3 className="mb-3 text-sm font-semibold">Support activity</h3><div className="grid gap-2 sm:grid-cols-[1fr_80px_auto]"><input value={s.summary} onChange={(e) => setS({ ...s, summary: e.target.value })} placeholder="What was done" className={inputCls} /><input type="number" value={s.hours} onChange={(e) => setS({ ...s, hours: e.target.value })} placeholder="Hrs" className={inputCls} /><Btn onClick={async () => { if (!s.summary) return; await sb().from('support_records').insert({ project_id: p.id, summary: s.summary, hours: s.hours || null }); setS({ summary: '', hours: '' }); loadSup() }}>Log</Btn></div>
             <ul className="mt-3 space-y-2">{sup.map((x) => <li key={x.id} className="border-t border-line pt-2 text-sm">{x.summary} <span className="text-xs text-mute">· {x.hours ? `${x.hours}h · ` : ''}{fmtDate(x.created_at)}</span></li>)}</ul></Card>
-          <Btn kind="danger" onClick={async () => { if (confirm('Archive project?')) { await sb().from('projects').update({ archived: true }).eq('id', p.id); nav('/admin/projects') } }}>Archive</Btn>
+          <Btn kind="danger" onClick={async () => { if (confirm('Archive project?')) { await sb().from('projects').update({ archived: true }).eq('id', p.id); nav('/gx-console-fsdj84qteyv9/projects') } }}>Archive</Btn>
         </div>
       </div>
     </>

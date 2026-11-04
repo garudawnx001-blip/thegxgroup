@@ -36,7 +36,7 @@ export function PublicRoutes() {
 
 export default function App() {
   const { pathname } = useLocation()
-  const isAdmin = pathname.startsWith('/admin')
+  const isAdmin = pathname.startsWith('/gx-console-fsdj84qteyv9')
   const [intro, setIntro] = useState(() => typeof document !== 'undefined' && document.documentElement.classList.contains('intro'))
   useEffect(() => {
     if (isAdmin || !matchMedia('(pointer: fine)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -47,7 +47,7 @@ export default function App() {
     })
     return () => { cancelAnimationFrame(raf); lenis?.destroy() }
   }, [isAdmin])
-  if (isAdmin) return <Suspense fallback={<div className="min-h-screen" />}><Routes><Route path="/admin/*" element={<Admin />} /></Routes></Suspense>
+  if (isAdmin) return <Suspense fallback={<div className="min-h-screen" />}><Routes><Route path="/gx-console-fsdj84qteyv9/*" element={<Admin />} /></Routes></Suspense>
   return (
     <>
       {intro && <Intro onDone={() => { sessionStorage.setItem('gxIntro', '1'); document.documentElement.classList.remove('intro'); setIntro(false) }} />}

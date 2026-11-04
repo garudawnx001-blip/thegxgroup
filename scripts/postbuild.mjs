@@ -77,7 +77,7 @@ for (const w of portfolio) {
   const ld = { '@context': 'https://schema.org', '@graph': [org, { '@type': 'CreativeWork', name: w.name, description: w.description, genre: w.category, url: SITE.url + p, creator: { '@id': ORG_ID } }, crumbs(p, w.name)] }
   write(p, page(p, head(p, m, ld)))
 }
-// 404 fallback = full app shell (GitHub Pages serves it for unknown paths, e.g. /admin)
+// 404 fallback = full app shell (GitHub Pages serves it for unknown paths)
 fs.writeFileSync(path.join(DIST, '404.html'), page('/404', head('/404', { title: 'Page not found | THE GX GROUP', description: 'This page does not exist.' }, { '@context': 'https://schema.org', ...website })).replace('index,follow,max-image-preview:large,max-snippet:-1', 'noindex'))
 
 // sitemap
@@ -88,24 +88,20 @@ fs.writeFileSync(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="
 fs.writeFileSync(path.join(DIST, 'robots.txt'), `# THE GX GROUP
 User-agent: *
 Allow: /
-Disallow: /admin
 
 # AI answer engines are welcome to read public pages
 User-agent: GPTBot
 Allow: /
-Disallow: /admin
 User-agent: OAI-SearchBot
 Allow: /
 User-agent: ChatGPT-User
 Allow: /
 User-agent: ClaudeBot
 Allow: /
-Disallow: /admin
 User-agent: Claude-SearchBot
 Allow: /
 User-agent: PerplexityBot
 Allow: /
-Disallow: /admin
 User-agent: Google-Extended
 Allow: /
 User-agent: Applebot-Extended
