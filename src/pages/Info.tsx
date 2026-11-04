@@ -32,6 +32,14 @@ export function About() {
           <div className="space-y-6">{PROCESS.map((p) => <Reveal key={p.k}><div className="border-t border-line pt-5"><p className="font-display text-[11px] font-semibold tracking-label text-accent">{p.k}</p><p className="mt-2 text-lg">{p.d}</p></div></Reveal>)}</div>
         </div>
       </Section>
+      <Section className="pb-10">
+        <Reveal>
+          <a href={SITE.parent.url} target="_blank" rel="noopener" className="spot group flex items-center gap-5 border border-line bg-surface p-6 sm:p-8">
+            <span className="flex h-16 w-20 shrink-0 items-center justify-center bg-[#07080A]"><img src="/garudawnx-mark.webp" alt="GarudawnX logo" width={152} height={112} loading="lazy" className="h-12 w-auto" /></span>
+            <span><span className="font-display text-[11px] font-semibold tracking-label text-mute">PARENT COMPANY</span><span className="mt-2 block font-display text-xl font-bold">THE GX GROUP is a venture of GarudawnX</span><span className="mt-1 block text-sm text-accent">garudawnx.com ↗</span></span>
+          </a>
+        </Reveal>
+      </Section>
       <TwoPaths />
       </Band>
     </>

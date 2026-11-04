@@ -23,11 +23,12 @@ const ORG_ID = `${SITE.url}/#organization`
 const org = {
   '@type': ['Organization', 'ProfessionalService'], '@id': ORG_ID, name: SITE.name, alternateName: ['The GX Group', 'GX Group'], url: SITE.url + '/',
   logo: { '@type': 'ImageObject', url: `${SITE.url}/brand/logo-900.png`, width: 600, height: 178 }, image: `${SITE.url}/brand/og.jpg`,
-  slogan: 'Build | Launch | Scale', description: SITE.description, email: SITE.email,
+  slogan: 'Build | Launch | Scale',
+  parentOrganization: { '@type': 'Organization', name: 'GarudawnX', url: 'https://garudawnx.com', logo: `${SITE.url}/garudawnx-mark.webp` }, description: SITE.description, email: SITE.email,
   address: { '@type': 'PostalAddress', addressLocality: 'Bengaluru', addressRegion: 'Karnataka', addressCountry: 'IN' },
   areaServed: [{ '@type': 'Country', name: 'India' }, 'Worldwide'],
   knowsAbout: ['Mobile app development', 'Web application development', 'SaaS development', 'AI and automation', 'Backend engineering', 'Product design', 'Technology equity partnerships'],
-  telephone: SITE.phone,
+  telephone: [SITE.phone, SITE.phone2],
   contactPoint: [{ '@type': 'ContactPoint', contactType: 'customer support', email: SITE.email, telephone: SITE.phone, availableLanguage: ['English', 'Kannada', 'Hindi'] }],
 }
 const website = { '@type': 'WebSite', '@id': `${SITE.url}/#website`, url: SITE.url + '/', name: SITE.name, publisher: { '@id': ORG_ID }, inLanguage: 'en-IN' }
@@ -117,7 +118,7 @@ fs.writeFileSync(path.join(DIST, 'llms.txt'), `# THE GX GROUP
 
 > ${SITE.description}
 
-Tagline: Build | Launch | Scale. Website: ${SITE.url}. Email: ${SITE.email}. Phone/WhatsApp: ${SITE.phone}. Location: ${SITE.location}.
+Tagline: Build | Launch | Scale. A GarudawnX company (https://garudawnx.com). Website: ${SITE.url}. Email: ${SITE.email}. Call/WhatsApp (business): ${SITE.phone}. Phone: ${SITE.phone2}. Location: ${SITE.location}.
 
 ## What THE GX GROUP does
 THE GX GROUP is a technology partnership company. It designs, builds, launches and supports technology products for founders and businesses.

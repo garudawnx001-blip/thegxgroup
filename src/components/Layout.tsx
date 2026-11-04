@@ -82,11 +82,16 @@ export function Footer() {
         <div>
           <p className="font-display text-[11px] font-semibold tracking-label text-mute">REACH US</p>
           <a href={`mailto:${SITE.email}`} className="mt-5 block text-sm hover:text-accent">{SITE.email}</a>
-          <a href={`tel:${SITE.phoneHref}`} className="mt-2 block text-sm hover:text-accent">{SITE.phone}</a>
+          <a href={`tel:${SITE.phoneHref}`} className="mt-2 block text-sm hover:text-accent">{SITE.phone} <span className="text-mute">· Call / WhatsApp</span></a>
+          <a href={`tel:${SITE.phone2Href}`} className="mt-1 block text-sm hover:text-accent">{SITE.phone2}</a>
           <a href={SITE.whatsapp} target="_blank" rel="noopener" className="mt-2 block text-sm text-accent">WhatsApp us ↗</a>
           <p className="mt-2 text-sm text-mute">{SITE.location}</p>
         </div>
       </div>
+      <a href={SITE.parent.url} target="_blank" rel="noopener" aria-label="GarudawnX — garudawnx.com" className="group mx-auto flex max-w-site items-center gap-4 border-t border-line px-5 py-6 sm:px-8">
+        <img src="/garudawnx-mark.webp" alt="GarudawnX logo" width={152} height={112} loading="lazy" className="h-10 w-auto transition-transform duration-500 group-hover:-translate-y-0.5" />
+        <span className="text-sm leading-snug text-mute">A <span className="font-display font-semibold text-[#E8B53A]">GarudawnX</span> company<span className="block text-xs text-mute/80 transition-colors group-hover:text-ink">garudawnx.com ↗</span></span>
+      </a>
       <div className="mx-auto flex max-w-site flex-col gap-3 border-t border-line px-5 py-6 text-xs text-mute sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <p>© {new Date().getFullYear()} THE GX GROUP. All rights reserved.</p>
         <div className="flex gap-6"><Link to="/privacy-policy" className="hover:text-ink">Privacy</Link><Link to="/terms" className="hover:text-ink">Terms</Link></div>
