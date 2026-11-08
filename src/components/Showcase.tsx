@@ -30,7 +30,7 @@ function Badge({ l, slug }: { l: L; slug: string }) {
   return (
     <a href={l.url} target="_blank" rel="noopener" aria-label={label} title={label}
       onClick={() => track('portfolio_outbound', { slug, to: ios ? 'app_store' : 'google_play' })}
-      className="inline-block h-[52px] transition-opacity hover:opacity-85">
+      className="inline-block h-[52px] origin-center transition-opacity hover:opacity-85 max-[400px]:-mx-[8px] max-[400px]:scale-[0.86]">
       {ok ? (ios
         // official Apple badge (120x40 artwork)
         ? <img src={OFFICIAL.ios} alt={label} width={156} height={52} className="h-[52px] w-[156px]" onError={() => setOk(false)} />
@@ -65,20 +65,28 @@ export function BrandReveal({ b, links, slug }: { b: Brand; links: L[]; slug: st
   const reduce = useReducedMotion()
   const accent = b.accent ?? '#25D366'
   const words = [b.first, b.second].filter(Boolean) as string[]
-  const box = useRef<HTMLDivElement>(null)
+  const box = useRef<HTMLElement>(null)
+  const slot = useRef<HTMLDivElement>(null)
   const seen = useInView(box, { once: true, amount: 0.55 })
   const [run, setRun] = useState(0)
-  const [w, setW] = useState(170)
+  // geometry: mark width, slider width, and the arrowhead position measured from the panel centre
+  const [g, setG] = useState({ w: 170, track: 300, tip: { x: 70, y: -120 } })
   useEffect(() => { if (seen) setRun((r) => r || 1) }, [seen])
   useEffect(() => {
     const el = box.current; if (!el) return
-    const fit = () => setW(Math.round(Math.min(190, Math.max(130, el.clientWidth * 0.17))))
-    fit(); const ro = new ResizeObserver(fit); ro.observe(el); return () => ro.disconnect()
+    const fit = () => {
+      const W = el.clientWidth
+      const w = Math.round(Math.min(190, Math.max(130, W * 0.17))), h = (w * 470) / 640
+      const sr = el.getBoundingClientRect(), mr = slot.current?.getBoundingClientRect()
+      const tip = mr ? { x: mr.left + mr.width / 2 - w / 2 + 0.97 * w - (sr.left + sr.width / 2), y: mr.top + 0.08 * h - (sr.top + sr.height / 2) } : { x: 70, y: -120 }
+      setG({ w, track: Math.min(300, W - 56), tip })
+    }
+    fit(); const ro = new ResizeObserver(fit); ro.observe(el); document.fonts?.ready.then(fit); return () => ro.disconnect()
   }, [])
+  const { w, track: TRACK, tip } = g
   const h = Math.round(w * 470 / 640) // mark artwork ratio
-  const TRACK = 300, KNOB = 52, PAD = 4, travel = TRACK - 2 * PAD - KNOB
+  const KNOB = 52, PAD = 4, TH = KNOB + 2 * PAD, travel = TRACK - 2 * PAD - KNOB
   const x0 = -travel / 2, x1 = travel / 2
-  const tip = { x: (0.97 - 0.5) * w, y: (0.08 - 0.5) * h } // arrowhead of the mark, from the slot centre
   const play = run > 0 && !reduce
   const done = reduce || run > 0
   // knob timeline (s): appear .3 → drag .9–1.7 → hold → fly to arrowhead 1.85–2.35
@@ -90,28 +98,34 @@ export function BrandReveal({ b, links, slug }: { b: Brand; links: L[]; slug: st
   return (
     <section ref={box} aria-label={`${words.join(' ')} brand`} className="relative overflow-hidden border border-line text-white" style={{ background: b.bg ?? '#050505' }}>
       {b.font && <style>{`@font-face{font-family:GXBrand;src:url(${b.font}-800.woff2) format('woff2');font-weight:800;font-display:swap}@font-face{font-family:GXBrand;src:url(${b.font}-400.woff2) format('woff2');font-weight:400;font-display:swap}`}</style>}
-      <div key={run} className="mx-auto flex max-w-3xl flex-col items-center px-6 pb-14 pt-16 text-center sm:pb-16 sm:pt-20" style={{ fontFamily: b.font ? 'GXBrand, sans-serif' : undefined }}>
-        {/* stage: slider and mark share one slot */}
-        <div className="relative" style={{ width: Math.max(w, TRACK), height: h }}>
-          {play && <>
-            <motion.span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[170%] rounded-md px-2.5 py-1 text-[11px] font-extrabold tracking-[0.16em]" style={{ background: accent, color: '#04140a' }}
-              initial={{ opacity: 0, y: 6 }} animate={{ opacity: [0, 1, 1, 0], y: [6, 0, 0, -4] }} transition={{ duration: 2.4, times: [0, 0.12, 0.8, 1], ease: 'easeOut' }}>● LIVE</motion.span>
-            <motion.div className="absolute left-1/2 top-1/2 overflow-hidden rounded-full border border-[#262626] bg-[#121212]" style={{ width: TRACK, height: KNOB + 2 * PAD, marginLeft: -TRACK / 2, marginTop: -(KNOB + 2 * PAD) / 2 }}
+      {/* act 1 — live session + swipe-to-bid, centred in the panel */}
+      {play && (
+        <div key={`s${run}`} aria-hidden className="pointer-events-none absolute inset-0 z-10" style={{ fontFamily: b.font ? 'GXBrand, sans-serif' : undefined }}>
+          <div className="absolute left-1/2 top-1/2" style={{ width: 0, height: 0 }}>
+            <div className="absolute left-0 flex -translate-x-1/2 justify-center" style={{ top: -TH / 2 - 40 }}>
+              <motion.span className="block whitespace-nowrap rounded-md px-2.5 py-1 text-[11px] font-extrabold tracking-[0.16em]" style={{ background: accent, color: '#04140a' }}
+                initial={{ opacity: 0, y: 6 }} animate={{ opacity: [0, 1, 1, 0], y: [6, 0, 0, -4] }} transition={{ duration: 2.3, times: [0, 0.12, 0.8, 1], ease: 'easeOut' }}>● LIVE</motion.span>
+            </div>
+            <motion.div className="absolute overflow-hidden rounded-full border border-[#262626] bg-[#121212]" style={{ width: TRACK, height: TH, left: -TRACK / 2, top: -TH / 2 }}
               initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: [0, 1, 1, 1, 1, 0], scale: [0.96, 1, 1, 1, 1, 0.98] }} transition={{ duration: T - 0.15, times }}>
               <motion.div className="absolute inset-y-0 left-0 rounded-full" style={{ background: `linear-gradient(90deg, ${accent}33, ${accent}88)` }}
-                initial={{ width: KNOB + 2 * PAD }} animate={{ width: [KNOB + 2 * PAD, KNOB + 2 * PAD, KNOB + 2 * PAD, TRACK, TRACK, TRACK] }} transition={{ duration: T - 0.15, times, ease: ['linear', 'linear', finger, 'linear', 'linear'] }} />
+                initial={{ width: TH }} animate={{ width: [TH, TH, TH, TRACK, TRACK, TRACK] }} transition={{ duration: T - 0.15, times, ease: ['linear', 'linear', finger, 'linear', 'linear'] }} />
               <motion.span className="absolute inset-0 flex items-center justify-center pl-10 text-[15px] font-normal tracking-wide text-white/80"
                 initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 1, 0] }} transition={{ duration: 1.35, times: [0, 0.22, 0.66, 1] }}>Swipe to bid</motion.span>
             </motion.div>
-            <motion.span className="absolute left-1/2 top-1/2 z-10 flex items-center justify-center rounded-full" style={{ width: KNOB, height: KNOB, marginLeft: -KNOB / 2, marginTop: -KNOB / 2, background: accent }}
+            <motion.span className="absolute flex items-center justify-center rounded-full" style={{ width: KNOB, height: KNOB, left: -KNOB / 2, top: -KNOB / 2, background: accent }}
               initial={{ x: x0, y: 0, opacity: 0, scale: 0.6 }}
               animate={{ x: [x0, x0, x0, x1, x1, tip.x], y: [0, 0, 0, 0, 0, tip.y], scale: [0.6, 1, 1, 1, 0.92, 0.3], opacity: [0, 1, 1, 1, 1, 0] }}
               transition={{ duration: T, times, ease: ['easeOut', 'linear', finger, 'easeOut', [0.55, 0, 0.25, 1]] }}>
-              <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="#04140a" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+              <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="#04140a" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
             </motion.span>
-          </>}
-          {/* the mark wipes in along its own rising diagonal */}
-          <motion.div className="absolute left-1/2 top-0" style={{ width: w, height: h, marginLeft: -w / 2 }}
+          </div>
+        </div>
+      )}
+      <div key={run} className="mx-auto flex max-w-3xl flex-col items-center px-6 pb-14 pt-16 text-center sm:pb-16 sm:pt-20" style={{ fontFamily: b.font ? 'GXBrand, sans-serif' : undefined }}>
+        {/* act 2 — the mark wipes in along its own rising diagonal, where the knob lands */}
+        <div ref={slot} className="relative" style={{ width: w, height: h }}>
+          <motion.div className="absolute inset-0"
             initial={hidden || play ? { clipPath: 'polygon(0% 100%, 0% 100%, 0% 100%)', scale: 0.94 } : false}
             animate={done ? { clipPath: 'polygon(0% 100%, 0% -110%, 210% 100%)', scale: 1 } : undefined}
             transition={play ? { delay: 1.95, duration: 0.8, ease: [0.3, 0.7, 0.2, 1] } : { duration: 0 }}>
@@ -135,7 +149,7 @@ export function BrandReveal({ b, links, slug }: { b: Brand; links: L[]; slug: st
         {b.tagline && <motion.p className="mt-4 text-[clamp(1rem,1.5vw,1.2rem)] font-normal text-white/65" initial={hidden || play ? { opacity: 0, y: 8 } : false} animate={done ? { opacity: 1, y: 0 } : undefined} transition={play ? { delay: 3.05, duration: 0.7, ease } : { duration: 0 }}>{b.tagline}</motion.p>}
         <motion.div className="mt-6 h-px w-24 origin-left" style={{ background: accent }} initial={hidden || play ? { scaleX: 0 } : false} animate={done ? { scaleX: 1 } : undefined} transition={play ? { delay: 3.2, duration: 0.8, ease } : { duration: 0 }} />
         <motion.div initial={hidden || play ? { opacity: 0, y: 10 } : false} animate={done ? { opacity: 1, y: 0 } : undefined} transition={play ? { delay: 3.4, duration: 0.7, ease } : { duration: 0 }}>
-          <StoreBadges links={links} slug={slug} className="mt-8 justify-center" />
+          <StoreBadges links={links} slug={slug} className="mt-8 justify-center max-[400px]:flex-nowrap max-[400px]:gap-1" />
         </motion.div>
       </div>
       {!reduce && run > 0 && <button type="button" onClick={() => setRun((r) => r + 1)} className="absolute bottom-3 right-4 text-[11px] font-semibold tracking-[0.14em] text-white/40 transition-colors hover:text-white/80">↻ REPLAY</button>}
