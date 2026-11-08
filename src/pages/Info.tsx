@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useLocation, useParams, Link } from 'react-router-dom'
 import { CAPABILITIES, PARTNERSHIP_POINTS, PROCESS, SITE } from '../content/site'
 import { Band, Button, Eyebrow, MaskText, PageHero, Reveal, Section, SpotCard } from '../components/ui'
-import { Faq, STATUS_LABEL, TwoPaths, WorkCard, preloadedPortfolio, usePortfolio, type Portfolio } from '../components/blocks'
+import { Faq, OWNER_LABEL, STATUS_LABEL, TwoPaths, WorkCard, preloadedPortfolio, usePortfolio, type Portfolio } from '../components/blocks'
 import { useMeta } from '../lib/seo'
 import { BrandReveal, StoreBadges, isStore } from '../components/Showcase'
 import { db, track } from '../lib/supabase'
@@ -151,14 +151,14 @@ export function WorkDetail() {
   useMeta(`/work/${slug}`, p ? { title: `${p.name} — ${p.category} | THE GX GROUP`, description: p.description.slice(0, 155) } : undefined)
   if (p === undefined) return <Section className="pt-44"><div className="h-64 animate-pulse bg-surface" /></Section>
   if (!p) return <NotFound />
-  const meta: [string, string][] = [['Client', p.client || (p.ownership === 'client' ? 'Client project' : 'Internal product')], ['Category', p.category], ['Status', STATUS_LABEL[p.status] ?? p.status]]
+  const meta: [string, string][] = [[p.ownership === 'partner' ? 'Partner' : 'Client', p.client || (OWNER_LABEL[p.ownership] ?? 'Internal product')], ['Relationship', OWNER_LABEL[p.ownership] ?? p.ownership], ['Category', p.category], ['Status', STATUS_LABEL[p.status] ?? p.status]]
   const links = p.links?.length ? p.links : p.link ? [{ label: 'Visit live', url: p.link }] : []
   return (
     <>
-      <PageHero eyebrow={`CASE STUDY · ${p.category.toUpperCase()}`} lines={[p.name]} intro={p.description} />
+      <PageHero eyebrow={`${p.ownership === 'partner' ? 'PARTNERSHIP' : 'CASE STUDY'} · ${p.category.toUpperCase()}`} lines={[p.name]} intro={p.description} />
       <Band tone="dark">
         <Section className="pb-14">
-          <div className="grid gap-px border border-line bg-line sm:grid-cols-3">
+          <div className="grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
             {meta.map(([k, v]) => <div key={k} className="bg-bg px-5 py-4"><p className="font-display text-[11px] font-semibold tracking-label text-mute">{k.toUpperCase()}</p><p className="mt-1.5 font-display font-semibold">{v}</p></div>)}
           </div>
           {links.length > 0 && <div className="mt-6 flex flex-wrap items-center gap-3">{links.filter((l) => !isStore(l.url)).map((l, i) => <Button key={l.url} href={l.url} variant={i === 0 ? 'primary' : 'ghost'} onClick={() => track('portfolio_outbound', { slug: p.slug, to: l.label })}>{l.label}</Button>)}<StoreBadges links={links} slug={p.slug} /></div>}
@@ -179,7 +179,7 @@ export function WorkDetail() {
           )}
           {p.images?.[1] && <Reveal className="mx-auto mt-14 max-w-4xl"><img src={p.images[1]} alt={`${p.name} — how it works`} width={1600} height={1000} loading="lazy" className="w-full border border-line" /></Reveal>}
           <div className="mt-14 grid gap-10 md:grid-cols-2">
-            {!!p.services?.length && <div className="border-t border-line pt-5"><p className="font-display text-[11px] font-semibold tracking-label text-accent">WHAT WE DELIVERED</p><ul className="mt-4 space-y-2">{p.services.map((x) => <li key={x}>{x}</li>)}</ul></div>}
+            {!!p.services?.length && <div className="border-t border-line pt-5"><p className="font-display text-[11px] font-semibold tracking-label text-accent">{p.ownership === 'partner' ? 'OUR ROLE AS TECHNOLOGY PARTNER' : 'WHAT WE DELIVERED'}</p><ul className="mt-4 space-y-2">{p.services.map((x) => <li key={x}>{x}</li>)}</ul></div>}
             <div className="border-t border-line pt-5"><p className="font-display text-[11px] font-semibold tracking-label text-accent">TECHNOLOGY</p><p className="mt-4 flex flex-wrap gap-2">{p.technology?.map((t) => <span key={t} className="border border-line px-2.5 py-1 text-xs">{t}</span>)}</p></div>
           </div>
           {p.brand && <Reveal className="mx-auto mt-14 max-w-4xl"><BrandReveal b={p.brand} links={links} slug={p.slug} /></Reveal>}

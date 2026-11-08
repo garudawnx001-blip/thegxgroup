@@ -85,7 +85,7 @@ for (const w of portfolio) {
   const og = fs.existsSync(path.join(DIST, 'media', w.slug, 'og.jpg')) ? `${SITE.url}/media/${w.slug}/og.jpg` : abs(w.images?.[0])
   const store = (w.links ?? []).filter((l) => /apps\.apple\.com|play\.google\.com/.test(l.url))
   const work = { '@type': 'CreativeWork', '@id': SITE.url + p + '#work', name: `${w.name} — case study`, headline: `${w.name}: ${w.category}`, description: w.description, genre: w.category, url: SITE.url + p, image: (w.images ?? []).map(abs), creator: { '@id': ORG_ID }, keywords: (w.technology ?? []).join(', '), inLanguage: 'en-IN' }
-  if (w.client) work.sourceOrganization = { '@type': 'Organization', name: w.client }
+  if (w.client) work[w.ownership === 'partner' ? 'contributor' : 'sourceOrganization'] = { '@type': 'Organization', name: w.client }
   const g = [org, work, crumbs(p, w.name)]
   if (store.length) { const app = { '@type': 'MobileApplication', name: w.name, description: w.description, applicationCategory: 'ShoppingApplication', operatingSystem: 'iOS, Android', url: w.link ?? undefined, sameAs: store.map((l) => l.url), image: abs(w.images?.[0]), featureList: (w.features ?? []).join('; '), offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' }, author: { '@id': ORG_ID } }; if (w.client) app.publisher = { '@type': 'Organization', name: w.client }; work.about = app; g.push(app) }
   write(p, page(p, head(p, m, { '@context': 'https://schema.org', '@graph': g }, og)))
@@ -139,7 +139,7 @@ THE GX GROUP is a technology partnership company. It designs, builds, launches a
 ## Capabilities
 ${CAPABILITIES.map((c) => `- ${c.title}: ${c.short} Deliverables: ${c.deliver.join(', ')}. Technologies: ${c.tech.join(', ')}.`).join('\n')}
 
-${portfolio.length ? `## Selected work (case studies)\n${portfolio.map((w) => `- [${w.name}](${SITE.url}/work/${w.slug}) — ${w.category}${w.client ? ` for ${w.client}` : ''}. ${w.description}${w.features?.length ? ` Key features: ${w.features.join('; ')}.` : ''}`).join('\n')}\n\n` : ''}## Frequently asked questions
+${portfolio.length ? `## Selected work (case studies)\n${portfolio.map((w) => `- [${w.name}](${SITE.url}/work/${w.slug}) — ${w.category}${w.client ? (w.ownership === 'partner' ? ` — technology partnership with ${w.client}` : ` for ${w.client}`) : ''}. ${w.description}${w.features?.length ? ` Key features: ${w.features.join('; ')}.` : ''}`).join('\n')}\n\n` : ''}## Frequently asked questions
 ${[...FAQS, ...PM_FAQ].map((f) => `- Q: ${f.q}\n  A: ${f.a}`).join('\n')}
 
 ## Pages

@@ -4,18 +4,19 @@
   "slug": "apex-swipe",
   "name": "Apex Swipe",
   "category": "Live-commerce app",
-  "ownership": "client",
+  "ownership": "partner",
   "client": "Apexswipe Private Limited, Bengaluru",
   "status": "live",
-  "description": "Apex Swipe is a live-commerce app where sellers and creators showcase products in live video sessions, and viewers interact in real time and place bids with a single swipe. We designed and built the platform — iOS and Android apps plus the website — for Apexswipe Private Limited, Bengaluru.",
-  "challenge": "Online shopping is mostly static: product photos, listings and a checkout button. Buyers can't see a product in action or ask the seller a question in the moment, and sellers and creators have no simple way to sell to an engaged live audience. The brief was to make buying feel live and social, while keeping bidding fast enough to happen mid-stream and safe enough that nobody bids by accident.",
+  "description": "Apex Swipe is a live-commerce app where sellers and creators showcase products in live video sessions, and viewers interact in real time and place bids with a single swipe. THE GX GROUP is Apex Swipe's technology partner: together with Apexswipe Private Limited, Bengaluru, we designed and built the platform — iOS and Android apps plus the website — and continue to run and grow it.",
+  "challenge": "Online shopping is mostly static: product photos, listings and a checkout button. Buyers can't see a product in action or ask the seller a question in the moment, and sellers and creators have no simple way to sell to an engaged live audience. The goal we set with the Apex Swipe team was to make buying feel live and social, while keeping bidding fast enough to happen mid-stream and safe enough that nobody bids by accident.",
   "solution": "A mobile-first platform built around live sessions. Sellers and creators host live drops; viewers watch, chat and react in real time; and the signature swipe-to-bid control lets them bid with one deliberate drag of a slider — no typing, no pop-up confirmations and no accidental taps. The highest bid wins, payment runs through UPI, and the order moves straight into shipping with tracking updates on WhatsApp.",
   "services": [
+   "Technology partnership — shared product vision",
    "Product & UX design",
    "iOS and Android apps",
    "Live video & real-time bidding",
    "Payments & shipping integrations",
-   "Marketing website"
+   "Website, launch and ongoing support"
   ],
   "features": [
    "Live video sessions hosted by sellers and creators",

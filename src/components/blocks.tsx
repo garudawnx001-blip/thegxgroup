@@ -68,6 +68,7 @@ export type Portfolio = { id: string; slug: string; name: string; category: stri
 export type Brand = { mark: string; first: string; second?: string; tagline?: string; accent?: string; bg?: string; font?: string }
 /** Published portfolio baked into each pre-rendered page (SEO + no loading flash); refreshed from the database after load. */
 export const preloadedPortfolio = () => (globalThis as { __GX_PF?: Portfolio[] }).__GX_PF
+export const OWNER_LABEL: Record<string, string> = { client: 'Client work', partner: 'Technology partnership', internal: 'Internal product' }
 export const STATUS_LABEL: Record<string, string> = { live: 'Live', in_development: 'In development', prototype: 'Prototype' }
 
 export function usePortfolio() {
@@ -88,7 +89,7 @@ export function WorkCard({ p, i = 0 }: { p: Portfolio; i?: number }) {
           <span className="absolute left-4 top-4 bg-bg/80 px-2.5 py-1 font-display text-[10px] font-semibold tracking-label backdrop-blur">{(STATUS_LABEL[p.status] ?? p.status).toUpperCase()}</span>
         </div>
         <div className="mt-5 flex items-start justify-between gap-4">
-          <div><h3 className="font-display text-xl font-bold tracking-tight">{p.name}</h3><p className="mt-1 text-sm text-mute">{p.category} · {p.ownership === 'client' ? 'Client work' : 'Internal product'}</p></div>
+          <div><h3 className="font-display text-xl font-bold tracking-tight">{p.name}</h3><p className="mt-1 text-sm text-mute">{p.category} · {OWNER_LABEL[p.ownership] ?? 'Internal product'}</p></div>
           <span className="text-mute transition-colors group-hover:text-accent">↗</span>
         </div>
       </Link>
