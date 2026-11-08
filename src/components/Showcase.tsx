@@ -76,7 +76,7 @@ export function BrandReveal({ b, links, slug }: { b: Brand; links: L[]; slug: st
     const el = box.current; if (!el) return
     const fit = () => {
       const W = el.clientWidth
-      const w = Math.round(Math.min(190, Math.max(130, W * 0.17))), h = (w * 470) / 640
+      const w = Math.round(Math.min(210, Math.max(130, W * 0.19))), h = (w * 470) / 640
       const sr = el.getBoundingClientRect(), mr = slot.current?.getBoundingClientRect()
       const tip = mr ? { x: mr.left + mr.width / 2 - w / 2 + 0.97 * w - (sr.left + sr.width / 2), y: mr.top + 0.08 * h - (sr.top + sr.height / 2) } : { x: 70, y: -120 }
       setG({ w, track: Math.min(300, W - 56), tip })
@@ -122,7 +122,7 @@ export function BrandReveal({ b, links, slug }: { b: Brand; links: L[]; slug: st
           </div>
         </div>
       )}
-      <div key={run} className="mx-auto flex max-w-3xl flex-col items-center px-6 pb-14 pt-16 text-center sm:pb-16 sm:pt-20" style={{ fontFamily: b.font ? 'GXBrand, sans-serif' : undefined }}>
+      <div key={run} className="mx-auto flex max-w-3xl flex-col items-center px-6 pb-10 pt-12 text-center sm:pb-10 sm:pt-14" style={{ fontFamily: b.font ? 'GXBrand, sans-serif' : undefined }}>
         {/* act 2 — the mark wipes in along its own rising diagonal, where the knob lands */}
         <div ref={slot} className="relative" style={{ width: w, height: h }}>
           <motion.div className="absolute inset-0"
@@ -135,7 +135,7 @@ export function BrandReveal({ b, links, slug }: { b: Brand; links: L[]; slug: st
               initial={{ backgroundPosition: '160% 0%' }} animate={{ backgroundPosition: '-60% 0%' }} transition={{ delay: 2.75, duration: 1.1, ease: 'easeInOut' }} />}
           </motion.div>
         </div>
-        <h2 className="mt-8 flex flex-wrap justify-center gap-x-[0.3em] text-[clamp(2rem,4.4vw,3.4rem)] font-extrabold leading-none tracking-[0.04em]">
+        <h2 className="mt-7 flex flex-wrap justify-center gap-x-[0.3em] text-[clamp(2rem,4.4vw,3.4rem)] font-extrabold leading-none tracking-[0.04em]">
           {words.map((wd, wi) => (
             <span key={wd} className="inline-flex overflow-hidden pb-[0.08em]" style={{ color: wi ? accent : undefined }}>
               {[...wd].map((ch) => {
@@ -147,12 +147,23 @@ export function BrandReveal({ b, links, slug }: { b: Brand; links: L[]; slug: st
           ))}
         </h2>
         {b.tagline && <motion.p className="mt-4 text-[clamp(1rem,1.5vw,1.2rem)] font-normal text-white/65" initial={hidden || play ? { opacity: 0, y: 8 } : false} animate={done ? { opacity: 1, y: 0 } : undefined} transition={play ? { delay: 3.05, duration: 0.7, ease } : { duration: 0 }}>{b.tagline}</motion.p>}
-        <motion.div className="mt-6 h-px w-24 origin-left" style={{ background: accent }} initial={hidden || play ? { scaleX: 0 } : false} animate={done ? { scaleX: 1 } : undefined} transition={play ? { delay: 3.2, duration: 0.8, ease } : { duration: 0 }} />
+        <motion.div className="mt-5 h-px w-24 origin-left" style={{ background: accent }} initial={hidden || play ? { scaleX: 0 } : false} animate={done ? { scaleX: 1 } : undefined} transition={play ? { delay: 3.2, duration: 0.8, ease } : { duration: 0 }} />
         <motion.div initial={hidden || play ? { opacity: 0, y: 10 } : false} animate={done ? { opacity: 1, y: 0 } : undefined} transition={play ? { delay: 3.4, duration: 0.7, ease } : { duration: 0 }}>
-          <StoreBadges links={links} slug={slug} className="mt-8 justify-center max-[400px]:flex-nowrap max-[400px]:gap-1" />
+          <StoreBadges links={links} slug={slug} className="mt-7 justify-center max-[400px]:flex-nowrap max-[400px]:gap-1" />
         </motion.div>
       </div>
-      {!reduce && run > 0 && <button type="button" onClick={() => setRun((r) => r + 1)} className="absolute bottom-3 right-4 text-[11px] font-semibold tracking-[0.14em] text-white/40 transition-colors hover:text-white/80">↻ REPLAY</button>}
+      {!!b.steps?.length && (
+        <div key={`st${run}`} className="grid border-t border-white/10 sm:grid-cols-3" style={{ fontFamily: b.font ? 'GXBrand, sans-serif' : undefined }}>
+          {b.steps.map((st, i) => (
+            <motion.div key={st} className="flex items-center gap-4 border-white/10 px-6 py-5 max-sm:border-t max-sm:first:border-t-0 sm:justify-center sm:border-l sm:first:border-l-0"
+              initial={hidden || play ? { opacity: 0, y: 10 } : false} animate={done ? { opacity: 1, y: 0 } : undefined} transition={play ? { delay: 3.7 + i * 0.14, duration: 0.7, ease } : { duration: 0 }}>
+              <span className="text-[12px] font-extrabold tracking-[0.18em]" style={{ color: accent }}>{String(i + 1).padStart(2, '0')}</span>
+              <span className="text-[15px] font-normal tracking-wide text-white/80">{st}</span>
+            </motion.div>
+          ))}
+        </div>
+      )}
+      {!reduce && run > 0 && <button type="button" onClick={() => setRun((r) => r + 1)} className="absolute right-4 top-3 text-[11px] font-semibold tracking-[0.14em] text-white/40 transition-colors hover:text-white/80">↻ REPLAY</button>}
     </section>
   )
 }

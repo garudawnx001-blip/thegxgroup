@@ -65,7 +65,7 @@ export function Faq({ items, title = ['Questions,', 'answered.'] }: { items: { q
 }
 
 export type Portfolio = { id: string; slug: string; name: string; category: string; ownership: string; status: string; description: string; challenge: string | null; solution: string | null; technology: string[]; images: string[]; link: string | null; client?: string | null; services?: string[]; features?: string[]; links?: { label: string; url: string }[]; brand?: Brand | null }
-export type Brand = { mark: string; first: string; second?: string; tagline?: string; accent?: string; bg?: string; font?: string }
+export type Brand = { mark: string; first: string; second?: string; tagline?: string; accent?: string; bg?: string; font?: string; steps?: string[] }
 /** Published portfolio baked into each pre-rendered page (SEO + no loading flash); refreshed from the database after load. */
 export const preloadedPortfolio = () => (globalThis as { __GX_PF?: Portfolio[] }).__GX_PF
 export const OWNER_LABEL: Record<string, string> = { client: 'Client work', partner: 'Technology partnership', internal: 'Internal product' }

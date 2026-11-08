@@ -1,1 +1,0 @@
-import{c as t}from"./supa-C5Jl8WKK.js";import{a as e,b as o}from"./index-BNAsuoKD.js";import"./motion-CkCzahgj.js";import"./vendor-CbZFnKOI.js";let i=null;const a=()=>i??(i=t(o,e,{auth:{persistSession:typeof window<"u"}}));export{a as sb};

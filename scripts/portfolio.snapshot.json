@@ -65,7 +65,12 @@
    "tagline": "A new way to shop online — live.",
    "accent": "#25D366",
    "bg": "#050505",
-   "font": "/media/apex-swipe/outfit"
+   "font": "/media/apex-swipe/outfit",
+   "steps": [
+    "Discover live sessions",
+    "Watch & interact",
+    "Swipe to bid"
+   ]
   }
  }
 ]
