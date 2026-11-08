@@ -5,6 +5,7 @@ import { CAPABILITIES, PARTNERSHIP_POINTS, PROCESS, SITE } from '../content/site
 import { Band, Button, Eyebrow, MaskText, PageHero, Reveal, Section, SpotCard } from '../components/ui'
 import { Faq, STATUS_LABEL, TwoPaths, WorkCard, preloadedPortfolio, usePortfolio, type Portfolio } from '../components/blocks'
 import { useMeta } from '../lib/seo'
+import { BrandReveal, StoreBadges, isStore } from '../components/Showcase'
 import { db, track } from '../lib/supabase'
 
 export function About() {
@@ -160,8 +161,8 @@ export function WorkDetail() {
           <div className="grid gap-px border border-line bg-line sm:grid-cols-3">
             {meta.map(([k, v]) => <div key={k} className="bg-bg px-5 py-4"><p className="font-display text-[11px] font-semibold tracking-label text-mute">{k.toUpperCase()}</p><p className="mt-1.5 font-display font-semibold">{v}</p></div>)}
           </div>
-          {links.length > 0 && <div className="mt-6 flex flex-wrap gap-3">{links.map((l, i) => <Button key={l.url} href={l.url} variant={i === 0 ? 'primary' : 'ghost'} onClick={() => track('portfolio_outbound', { slug: p.slug, to: l.label })}>{l.label}</Button>)}</div>}
-          {p.images?.[0] && <Reveal className="mt-10"><img src={p.images[0]} alt={`${p.name} — ${p.category}`} width={1600} height={1000} className="w-full border border-line" /></Reveal>}
+          {links.length > 0 && <div className="mt-6 flex flex-wrap items-center gap-3">{links.filter((l) => !isStore(l.url)).map((l, i) => <Button key={l.url} href={l.url} variant={i === 0 ? 'primary' : 'ghost'} onClick={() => track('portfolio_outbound', { slug: p.slug, to: l.label })}>{l.label}</Button>)}<StoreBadges links={links} slug={p.slug} /></div>}
+          {p.images?.[0] && <Reveal className="mx-auto mt-10 max-w-4xl"><img src={p.images[0]} alt={`${p.name} — ${p.category}`} width={1600} height={1000} className="w-full border border-line" /></Reveal>}
         </Section>
       </Band>
       <Band tone="light" className="py-10">
@@ -176,12 +177,13 @@ export function WorkDetail() {
               <ul className="mt-6 grid gap-x-10 gap-y-4 sm:grid-cols-2">{p.features.map((f) => <li key={f} className="flex gap-3 leading-relaxed"><span className="mt-[9px] h-1.5 w-1.5 shrink-0 rotate-45 bg-accent" />{f}</li>)}</ul>
             </div>
           )}
-          {p.images?.[1] && <Reveal className="mt-14"><img src={p.images[1]} alt={`${p.name} — how it works`} width={1600} height={1000} loading="lazy" className="w-full border border-line" /></Reveal>}
+          {p.images?.[1] && <Reveal className="mx-auto mt-14 max-w-4xl"><img src={p.images[1]} alt={`${p.name} — how it works`} width={1600} height={1000} loading="lazy" className="w-full border border-line" /></Reveal>}
           <div className="mt-14 grid gap-10 md:grid-cols-2">
             {!!p.services?.length && <div className="border-t border-line pt-5"><p className="font-display text-[11px] font-semibold tracking-label text-accent">WHAT WE DELIVERED</p><ul className="mt-4 space-y-2">{p.services.map((x) => <li key={x}>{x}</li>)}</ul></div>}
             <div className="border-t border-line pt-5"><p className="font-display text-[11px] font-semibold tracking-label text-accent">TECHNOLOGY</p><p className="mt-4 flex flex-wrap gap-2">{p.technology?.map((t) => <span key={t} className="border border-line px-2.5 py-1 text-xs">{t}</span>)}</p></div>
           </div>
-          {p.images?.slice(2).map((src) => <img key={src} src={src} alt={p.name} width={1600} height={1000} loading="lazy" className="mt-14 w-full border border-line" />)}
+          {p.brand && <Reveal className="mx-auto mt-14 max-w-4xl"><BrandReveal b={p.brand} links={links} slug={p.slug} /></Reveal>}
+          {p.images?.slice(2).map((src) => <img key={src} src={src} alt={p.name} width={1600} height={1000} loading="lazy" className="mx-auto mt-14 w-full max-w-4xl border border-line" />)}
           <div className="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-line pt-10">
             <div><p className="font-display text-2xl font-bold tracking-tight">Building something like this?</p><p className="mt-2 text-mute">Partner with us, or hire us to build it.</p></div>
             <div className="flex flex-wrap gap-3"><Button to="/partner-with-us" onClick={() => track('partner_cta_click', { where: `work_${p.slug}` })}>Partner with us</Button><Button to="/technology-services" variant="ghost" onClick={() => track('service_cta_click', { where: `work_${p.slug}` })}>Request a consultation</Button></div>

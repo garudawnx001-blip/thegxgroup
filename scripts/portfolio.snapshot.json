@@ -38,8 +38,7 @@
   ],
   "images": [
    "/media/apex-swipe/cover.webp",
-   "/media/apex-swipe/flow.webp",
-   "/media/apex-swipe/brand.webp"
+   "/media/apex-swipe/flow.webp"
   ],
   "link": "https://www.apexswipe.com",
   "links": [
@@ -57,6 +56,15 @@
    }
   ],
   "sort_order": 0,
-  "updated_at": "2026-11-08T06:11:25.523922+00:00"
+  "updated_at": "2026-11-08T06:25:00+00:00",
+  "brand": {
+   "mark": "/media/apex-swipe/mark.webp",
+   "first": "APEX",
+   "second": "SWIPE",
+   "tagline": "A new way to shop online — live.",
+   "accent": "#25D366",
+   "bg": "#050505",
+   "font": "/media/apex-swipe/outfit"
+  }
  }
 ]
