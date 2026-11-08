@@ -14,21 +14,21 @@ export const SITE = {
   projectsEmail: 'projects@thegxgroup.com',
   location: 'Bengaluru, Karnataka, India',
   description:
-    'THE GX GROUP is a technology partnership company in Bengaluru. We build apps, web platforms, SaaS and AI products for founders and businesses — through equity partnerships or paid development.',
+    'The GX Group (THE GX GROUP) is a technology partner and app, web, SaaS & AI development company in Bengaluru, India — a GarudawnX company building products for startups and businesses worldwide through equity partnerships or paid development.',
 }
 
 export type PageMeta = { title: string; description: string; path: string }
 export const META: Record<string, PageMeta> = {
-  '/': { path: '/', title: 'THE GX GROUP — App, Web, SaaS & AI Development Partner in Bengaluru', description: 'We partner with founders and businesses to build apps, web platforms, SaaS and AI products — via equity partnership with reduced fees, or paid development. Based in Bengaluru.' },
-  '/about': { path: '/about', title: 'About THE GX GROUP — Technology Partnership Company', description: 'Who we are, what we believe and how THE GX GROUP partners with founders to turn viable ideas into technology products.' },
-  '/capabilities': { path: '/capabilities', title: 'Capabilities — Apps, Web, SaaS, AI & Backend | THE GX GROUP', description: 'Mobile apps, websites and web apps, SaaS platforms, AI and automation, backend and infrastructure, product design and support.' },
-  '/partnership-model': { path: '/partnership-model', title: 'Equity Partnership Model — Reduced Fee + Negotiated Equity | THE GX GROUP', description: 'How our technology-for-equity partnership works: reduced development fee, individually negotiated equity, defined support and selective evaluation.' },
-  '/work': { path: '/work', title: 'Our Work — Selected Projects | THE GX GROUP', description: 'Selected real products and client projects built by THE GX GROUP, with clear status: live, in development or prototype.' },
-  '/partner-with-us': { path: '/partner-with-us', title: 'Apply for a Technology Partnership | THE GX GROUP', description: 'Founders and startups: apply for a technology and equity partnership with THE GX GROUP. Five short steps.' },
-  '/technology-services': { path: '/technology-services', title: 'Request a Project Consultation — Paid Development | THE GX GROUP', description: 'Hire THE GX GROUP for scoped, quoted development of apps, websites, SaaS, AI integrations and backend systems.' },
-  '/contact': { path: '/contact', title: 'Contact THE GX GROUP', description: 'Get in touch with THE GX GROUP in Bengaluru for partnerships, projects or general enquiries.' },
-  '/privacy-policy': { path: '/privacy-policy', title: 'Privacy Policy | THE GX GROUP', description: 'How THE GX GROUP collects, uses, stores and protects information submitted through this website.' },
-  '/terms': { path: '/terms', title: 'Terms of Use | THE GX GROUP', description: 'Terms governing use of the THE GX GROUP website and submission of partnership or project enquiries.' },
+  '/': { path: '/', title: 'The GX Group | App, Web, SaaS & AI Development Company — Bengaluru, India', description: 'The GX Group (THE GX GROUP) is a Bengaluru technology partner building mobile apps, websites, SaaS and AI products for startups and businesses in India and worldwide — equity partnership or paid development.' },
+  '/about': { path: '/about', title: 'About The GX Group — Technology Partner in Bengaluru | A GarudawnX Company', description: 'The GX Group is a Bengaluru technology partnership company and part of the GarudawnX family. Who we are, how we work and how we turn viable ideas into apps, platforms and AI products.' },
+  '/capabilities': { path: '/capabilities', title: 'App, Web, SaaS & AI Development Services | The GX Group', description: 'Mobile app development (iOS & Android), websites and web apps, SaaS platforms, AI & automation, backend engineering and UI/UX design — by The GX Group, Bengaluru.' },
+  '/partnership-model': { path: '/partnership-model', title: 'Tech Partner for Startups — Equity Partnership Model | The GX Group', description: 'Looking for a technology partner or tech co-founder? The GX Group builds your product at a reduced fee for individually negotiated equity, with defined support.' },
+  '/work': { path: '/work', title: 'Portfolio & Case Studies — Apps and Platforms | The GX Group', description: 'Real products and technology partnerships built by The GX Group, including the Apex Swipe live-commerce app — with clear status: live, in development or prototype.' },
+  '/partner-with-us': { path: '/partner-with-us', title: 'Find a Technology Partner for Your Startup — Apply | The GX Group', description: 'Founders and startups: apply for a technology and equity partnership with The GX Group in five short steps.' },
+  '/technology-services': { path: '/technology-services', title: 'Hire App & Web Developers in Bengaluru — Get a Quote | The GX Group', description: 'Hire The GX Group for scoped, quoted development of mobile apps, websites, SaaS, AI integrations and backend systems — for clients in India and worldwide.' },
+  '/contact': { path: '/contact', title: 'Contact The GX Group — Bengaluru | Call / WhatsApp +91 77602 87733', description: 'Contact The GX Group in Bengaluru for app, web, SaaS or AI projects and technology partnerships. Call or WhatsApp +91 77602 87733, Instagram @thegxgroup.' },
+  '/privacy-policy': { path: '/privacy-policy', title: 'Privacy Policy | The GX Group', description: 'How THE GX GROUP collects, uses, stores and protects information submitted through this website.' },
+  '/terms': { path: '/terms', title: 'Terms of Use | The GX Group', description: 'Terms governing use of the THE GX GROUP website and submission of partnership or project enquiries.' },
 }
 
 export const CAPABILITIES = [
@@ -41,10 +41,17 @@ export const CAPABILITIES = [
 ]
 
 export const FAQS = [
+  { q: 'What is The GX Group?', a: 'The GX Group (written THE GX GROUP) is a technology partnership and software development company based in Bengaluru, India. It designs, builds, launches and supports mobile apps, websites, web apps, SaaS platforms and AI products for startups and businesses. Website: thegxgroup.com.' },
+  { q: 'Is The GX Group part of GarudawnX?', a: 'Yes. The GX Group is a GarudawnX company. GarudawnX is the parent brand of the family, which also includes GX Properties and GX Academy.' },
+  { q: 'Where is The GX Group located, and do you work outside India?', a: 'The GX Group is based in Bengaluru, Karnataka, India, and works with founders and businesses across India and worldwide, remotely.' },
+  { q: 'Is The GX Group the same as other companies called GX Group?', a: 'No. The GX Group at thegxgroup.com is an independent technology partnership company in Bengaluru and part of the GarudawnX family. It is not affiliated with other businesses that use the GX Group name.' },
   { q: 'What does THE GX GROUP do?', a: 'THE GX GROUP is a technology partnership company in Bengaluru. We design and build apps, web platforms, SaaS and AI products for founders and businesses.' },
   { q: 'How does the equity partnership work?', a: 'For selected ventures we reduce our development fee in exchange for an equity stake. The percentage is negotiated individually, and responsibilities, support and costs are set out in a separate legal agreement.' },
   { q: 'Can I just hire you for paid development?', a: 'Yes. Request a project consultation and we will scope the work, send a commercial quotation with milestones, and offer maintenance as a separate agreement.' },
   { q: 'Is every partnership application accepted?', a: 'No. Applications are evaluated selectively on viability, founder commitment and technical fit. Submitting an application does not create any agreement.' },
+  { q: 'How much does it cost to build an app or website with The GX Group?', a: 'Every project is quoted individually after a free consultation, based on scope, features and timeline. For selected startups, the equity partnership lowers the development fee in exchange for negotiated equity.' },
+  { q: 'How long does it take to build an MVP?', a: 'Most MVPs take a few weeks to a few months depending on scope. The GX Group agrees milestones and timelines in writing before development starts.' },
+  { q: 'How can I contact The GX Group?', a: 'Call or WhatsApp +91 77602 87733, email hello@garudawnx.com, or follow and message The GX Group on Instagram at @thegxgroup.' },
   { q: 'Who pays for third-party costs like hosting or app stores?', a: 'Third-party costs such as hosting, licences and store fees are allocated separately and agreed in writing before work starts.' },
 ]
 

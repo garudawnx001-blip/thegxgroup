@@ -47,8 +47,8 @@ function Hero() {
       <motion.div style={{ y, opacity: o }} className="relative mx-auto w-full max-w-site px-5 pb-8 sm:px-8 sm:pb-12">
         <div className="grid items-end gap-8 lg:grid-cols-[auto_1fr] lg:gap-14">
           <div>
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="font-display text-[10px] font-semibold tracking-label text-accent sm:text-[11px]">TECHNOLOGY. PARTNERSHIP. SHARED GROWTH.</motion.p>
-            <h1 className="mt-4 font-display text-[clamp(2.3rem,6.4vw,5rem)] font-extrabold leading-[0.96] tracking-[-0.045em]">
+            <h1 className="font-display text-[clamp(2.3rem,6.4vw,5rem)] font-extrabold leading-[0.96] tracking-[-0.045em]">
+              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="mb-4 block text-[10px] font-semibold uppercase tracking-label text-accent sm:text-[11px]">The GX Group · Technology Partner · Bengaluru, India</motion.span>
               {['Your Vision.', 'Our Technology.', 'Shared Growth.'].map((l, i) => (
                 <span key={l} className="block overflow-hidden whitespace-nowrap pb-[0.06em]">
                   <motion.span className={`inline-block ${i === 2 ? 'text-gradient' : ''}`} initial={{ y: '105%' }} animate={{ y: 0 }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 + i * 0.1 }}>{l}</motion.span>

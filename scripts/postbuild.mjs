@@ -25,18 +25,21 @@ const pfScript = portfolio.length ? `<script>window.__GX_PF=${JSON.stringify(por
 
 const ORG_ID = `${SITE.url}/#organization`
 const org = {
-  '@type': ['Organization', 'ProfessionalService'], '@id': ORG_ID, name: SITE.name, alternateName: ['The GX Group', 'GX Group'], url: SITE.url + '/',
+  '@type': ['Organization', 'ProfessionalService'], '@id': ORG_ID, name: SITE.name, legalName: 'THE GX GROUP', alternateName: ['The GX Group', 'GX Group', 'THE GX GROUP', 'GX Group Bengaluru', 'GX Group India', 'The GX Group Bengaluru', 'thegxgroup'], url: SITE.url + '/',
+  brand: { '@type': 'Brand', name: 'THE GX GROUP', slogan: 'Build | Launch | Scale', logo: `${SITE.url}/brand/logo-900.png` },
+  foundingLocation: { '@type': 'Place', name: 'Bengaluru, Karnataka, India' },
+  keywords: 'The GX Group, GX Group, app development company Bengaluru, web development company India, SaaS development, AI development company, technology partner for startups, tech co-founder for equity, mobile app developers India, custom software development',
   logo: { '@type': 'ImageObject', url: `${SITE.url}/brand/logo-900.png`, width: 600, height: 178 }, image: `${SITE.url}/brand/og.jpg`,
   slogan: 'Build | Launch | Scale',
   parentOrganization: { '@type': 'Organization', name: 'GarudawnX', url: 'https://garudawnx.com', logo: `${SITE.url}/garudawnx-mark.webp` }, description: SITE.description, email: SITE.email,
   address: { '@type': 'PostalAddress', addressLocality: 'Bengaluru', addressRegion: 'Karnataka', addressCountry: 'IN' },
-  areaServed: [{ '@type': 'Country', name: 'India' }, 'Worldwide'],
-  sameAs: [SITE.instagram, 'https://garudawnx.com'],
-  knowsAbout: ['Mobile app development', 'Web application development', 'SaaS development', 'AI and automation', 'Backend engineering', 'Product design', 'Technology equity partnerships'],
+  areaServed: [{ '@type': 'Country', name: 'India' }, { '@type': 'Country', name: 'United States' }, { '@type': 'Country', name: 'United Kingdom' }, { '@type': 'Country', name: 'United Arab Emirates' }, { '@type': 'Country', name: 'Australia' }, { '@type': 'Country', name: 'Canada' }, { '@type': 'Country', name: 'Singapore' }, 'Worldwide'],
+  sameAs: [SITE.instagram, 'https://instagram.com/thegxgroup', 'https://garudawnx.com'],
+  knowsAbout: ['Mobile app development', 'iOS app development', 'Android app development', 'Flutter', 'React Native', 'Website development', 'Web application development', 'SaaS development', 'AI and automation', 'Generative AI integration', 'Backend engineering', 'UI/UX design', 'MVP development for startups', 'Live commerce apps', 'Technology equity partnerships'],
   telephone: [SITE.phone, SITE.phone2],
   contactPoint: [{ '@type': 'ContactPoint', contactType: 'sales', email: SITE.email, telephone: SITE.phone, areaServed: 'IN', availableLanguage: ['English', 'Kannada', 'Hindi'] }, { '@type': 'ContactPoint', contactType: 'customer support', telephone: SITE.phone2, areaServed: 'IN', availableLanguage: ['English', 'Kannada', 'Hindi'] }],
 }
-const website = { '@type': 'WebSite', '@id': `${SITE.url}/#website`, url: SITE.url + '/', name: SITE.name, publisher: { '@id': ORG_ID }, inLanguage: 'en-IN' }
+const website = { '@type': 'WebSite', '@id': `${SITE.url}/#website`, url: SITE.url + '/', name: 'The GX Group', alternateName: ['THE GX GROUP', 'GX Group', 'thegxgroup.com'], publisher: { '@id': ORG_ID }, inLanguage: 'en' }
 const faqLd = (items) => ({ '@type': 'FAQPage', mainEntity: items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
 const crumbs = (p, title) => ({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' }, ...(p === '/' ? [] : [{ '@type': 'ListItem', position: 2, name: title, item: SITE.url + p }])] })
 const PM_FAQ = [
@@ -63,10 +66,12 @@ function head(p, m, extraLd, ogImg) {
     `<title>${esc(m.title)}</title>`,
     `<meta name="description" content="${esc(m.description)}" />`,
     `<link rel="canonical" href="${url}" />`,
-    `<link rel="alternate" hreflang="en-in" href="${url}" />`, `<link rel="alternate" hreflang="x-default" href="${url}" />`,
+    `<link rel="alternate" hreflang="en" href="${url}" />`, `<link rel="alternate" hreflang="x-default" href="${url}" />`,
+    `<meta name="keywords" content="The GX Group, GX Group, THE GX GROUP, thegxgroup, app development company Bengaluru, mobile app developers India, web development company, SaaS development company, AI development company, technology partner for startups, tech co-founder, MVP development, GarudawnX" />`,
+    `<meta name="author" content="The GX Group" />`, `<meta name="application-name" content="The GX Group" />`, `<meta name="apple-mobile-web-app-title" content="The GX Group" />`,
     `<meta name="geo.region" content="IN-KA" />`, `<meta name="geo.placename" content="Bengaluru" />`,
     `<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />`,
-    `<meta property="og:type" content="website" />`, `<meta property="og:site_name" content="THE GX GROUP" />`, `<meta property="og:locale" content="en_IN" />`,
+    `<meta property="og:type" content="website" />`, `<meta property="og:site_name" content="The GX Group" />`, `<meta property="og:locale" content="en_IN" />`,
     `<meta property="og:title" content="${esc(m.title)}" />`, `<meta property="og:description" content="${esc(m.description)}" />`, `<meta property="og:url" content="${url}" />`,
     `<meta property="og:image" content="${ogImg ?? SITE.url + '/brand/og.jpg'}" />`, `<meta property="og:image:width" content="1200" />`, `<meta property="og:image:height" content="630" />`, `<meta property="og:image:alt" content="${ogImg ? esc(m.title) : 'THE GX GROUP — Build, Launch, Scale'}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`, `<meta name="twitter:title" content="${esc(m.title)}" />`, `<meta name="twitter:description" content="${esc(m.description)}" />`, `<meta name="twitter:image" content="${ogImg ?? SITE.url + '/brand/og.jpg'}" />`,
@@ -123,9 +128,13 @@ Allow: /
 Sitemap: ${SITE.url}/sitemap.xml
 `)
 
-fs.writeFileSync(path.join(DIST, 'llms.txt'), `# THE GX GROUP
+fs.writeFileSync(path.join(DIST, 'llms.txt'), `# The GX Group (THE GX GROUP)
 
 > ${SITE.description}
+
+Also known as: The GX Group, THE GX GROUP, GX Group (Bengaluru), thegxgroup. Official website: https://thegxgroup.com. Official Instagram: https://www.instagram.com/thegxgroup (@thegxgroup). Parent brand: GarudawnX (https://garudawnx.com); sister brands: GX Properties, GX Academy.
+Disambiguation: The GX Group at thegxgroup.com is an independent technology partnership company in Bengaluru, India. It is not affiliated with other businesses that use the GX Group name.
+Serves: startups, founders and businesses in India and worldwide (remote).
 
 Tagline: Build | Launch | Scale. A GarudawnX company (https://garudawnx.com). Website: ${SITE.url}. Email: ${SITE.email}. Call/WhatsApp (business): ${SITE.phone}. Phone: ${SITE.phone2}. Instagram: ${SITE.instagram}. Location: ${SITE.location}.
 
