@@ -19,6 +19,9 @@ THE GX GROUP is a technology partnership company. It designs, builds, launches a
 - Backend & Infra: Secure APIs, data and cloud that hold up under load. Deliverables: REST / GraphQL APIs, Auth & data security, CI/CD & monitoring. Technologies: Node.js, PostgreSQL, Cloud hosting.
 - Design & Support: Product design up front, technical support after launch. Deliverables: UX research & UI, Design systems, Maintenance & SLAs. Technologies: Figma, Analytics, Sentry.
 
+## Selected work (case studies)
+- [Apex Swipe](https://thegxgroup.com/work/apex-swipe) — Live-commerce app for Apexswipe Private Limited, Bengaluru. Apex Swipe is a live-commerce app where sellers and creators showcase products in live video sessions, and viewers interact in real time and place bids with a single swipe. We designed and built the platform — iOS and Android apps plus the website — for Apexswipe Private Limited, Bengaluru. Key features: Live video sessions hosted by sellers and creators; Swipe-to-bid slider that confirms only on a deliberate drag; Real-time chat and interaction in every live session; Live discovery feed by category — sneakers, collectibles, watches, vintage and tech; UPI checkout through Razorpay; card details are never stored; Shipping through Shiprocket with order tracking on WhatsApp; Seller live studio with instant UPI payouts; Apex Shield buyer protection.
+
 ## Frequently asked questions
 - Q: What does THE GX GROUP do?
   A: THE GX GROUP is a technology partnership company in Bengaluru. We design and build apps, web platforms, SaaS and AI products for founders and businesses.

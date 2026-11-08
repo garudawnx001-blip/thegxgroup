@@ -64,13 +64,15 @@ export function Faq({ items, title = ['Questions,', 'answered.'] }: { items: { q
   )
 }
 
-export type Portfolio = { id: string; slug: string; name: string; category: string; ownership: string; status: string; description: string; challenge: string | null; solution: string | null; technology: string[]; images: string[]; link: string | null }
+export type Portfolio = { id: string; slug: string; name: string; category: string; ownership: string; status: string; description: string; challenge: string | null; solution: string | null; technology: string[]; images: string[]; link: string | null; client?: string | null; services?: string[]; features?: string[]; links?: { label: string; url: string }[] }
+/** Published portfolio baked into each pre-rendered page (SEO + no loading flash); refreshed from the database after load. */
+export const preloadedPortfolio = () => (globalThis as { __GX_PF?: Portfolio[] }).__GX_PF
 export const STATUS_LABEL: Record<string, string> = { live: 'Live', in_development: 'In development', prototype: 'Prototype' }
 
 export function usePortfolio() {
-  const [rows, setRows] = useState<Portfolio[] | null>(null)
+  const [rows, setRows] = useState<Portfolio[] | null>(preloadedPortfolio() ?? null)
   useEffect(() => {
-    db().then((c) => c.from('portfolio_projects').select('*').eq('published', true).order('sort_order')).then(({ data }) => setRows((data as Portfolio[]) ?? []))
+    db().then((c) => c.from('portfolio_projects').select('*').eq('published', true).order('sort_order')).then(({ data, error }) => { if (!error) setRows((data as Portfolio[]) ?? []) })
   }, [])
   return rows
 }

@@ -15,9 +15,13 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').repl
 // published portfolio from the database (public, RLS-filtered)
 let portfolio = []
 try {
-  const r = await fetch('https://bksrlahkyatytjrizmqu.supabase.co/rest/v1/portfolio_projects?select=slug,name,category,description,updated_at&published=eq.true', { headers: { apikey: 'sb_publishable_GHXSGgJE8iEDdnAovLCN9g_CzEYeP0l' } })
+  const r = await fetch('https://bksrlahkyatytjrizmqu.supabase.co/rest/v1/portfolio_projects?select=*&published=eq.true&order=sort_order', { headers: { apikey: 'sb_publishable_GHXSGgJE8iEDdnAovLCN9g_CzEYeP0l' } })
   if (r.ok) portfolio = await r.json()
-} catch { /* build still succeeds */ }
+} catch { /* offline build */ }
+// fallback: snapshot of published projects (kept in the repo; refresh when the portfolio changes)
+if (!portfolio.length) { try { portfolio = JSON.parse(fs.readFileSync(path.resolve('scripts/portfolio.snapshot.json'), 'utf8')) } catch { /* none */ } }
+globalThis.__GX_PF = portfolio // SSR renders real case-study content
+const pfScript = portfolio.length ? `<script>window.__GX_PF=${JSON.stringify(portfolio).replace(/</g, '\\u003c')}</script>` : ''
 
 const ORG_ID = `${SITE.url}/#organization`
 const org = {
@@ -52,7 +56,7 @@ function graphFor(p, m) {
   return { '@context': 'https://schema.org', '@graph': g }
 }
 
-function head(p, m, extraLd) {
+function head(p, m, extraLd, ogImg) {
   const url = SITE.url + (p === '/' ? '/' : p)
   const ld = extraLd ?? graphFor(p, m)
   return [
@@ -64,9 +68,9 @@ function head(p, m, extraLd) {
     `<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />`,
     `<meta property="og:type" content="website" />`, `<meta property="og:site_name" content="THE GX GROUP" />`, `<meta property="og:locale" content="en_IN" />`,
     `<meta property="og:title" content="${esc(m.title)}" />`, `<meta property="og:description" content="${esc(m.description)}" />`, `<meta property="og:url" content="${url}" />`,
-    `<meta property="og:image" content="${SITE.url}/brand/og.jpg" />`, `<meta property="og:image:width" content="1200" />`, `<meta property="og:image:height" content="630" />`, `<meta property="og:image:alt" content="THE GX GROUP — Build, Launch, Scale" />`,
-    `<meta name="twitter:card" content="summary_large_image" />`, `<meta name="twitter:title" content="${esc(m.title)}" />`, `<meta name="twitter:description" content="${esc(m.description)}" />`, `<meta name="twitter:image" content="${SITE.url}/brand/og.jpg" />`,
-    `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`,
+    `<meta property="og:image" content="${ogImg ?? SITE.url + '/brand/og.jpg'}" />`, `<meta property="og:image:width" content="1200" />`, `<meta property="og:image:height" content="630" />`, `<meta property="og:image:alt" content="${ogImg ? esc(m.title) : 'THE GX GROUP — Build, Launch, Scale'}" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`, `<meta name="twitter:title" content="${esc(m.title)}" />`, `<meta name="twitter:description" content="${esc(m.description)}" />`, `<meta name="twitter:image" content="${ogImg ?? SITE.url + '/brand/og.jpg'}" />`,
+    `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`, pfScript,
   ].join('\n    ')
 }
 
@@ -77,8 +81,14 @@ const routes = Object.keys(META)
 for (const p of routes) write(p, page(p, head(p, META[p])))
 for (const w of portfolio) {
   const p = `/work/${w.slug}`; const m = { title: `${w.name} — ${w.category} | THE GX GROUP`, description: String(w.description).slice(0, 155) }
-  const ld = { '@context': 'https://schema.org', '@graph': [org, { '@type': 'CreativeWork', name: w.name, description: w.description, genre: w.category, url: SITE.url + p, creator: { '@id': ORG_ID } }, crumbs(p, w.name)] }
-  write(p, page(p, head(p, m, ld)))
+  const abs = (u) => (u?.startsWith('/') ? SITE.url + u : u)
+  const og = fs.existsSync(path.join(DIST, 'media', w.slug, 'og.jpg')) ? `${SITE.url}/media/${w.slug}/og.jpg` : abs(w.images?.[0])
+  const store = (w.links ?? []).filter((l) => /apps\.apple\.com|play\.google\.com/.test(l.url))
+  const work = { '@type': 'CreativeWork', '@id': SITE.url + p + '#work', name: `${w.name} — case study`, headline: `${w.name}: ${w.category}`, description: w.description, genre: w.category, url: SITE.url + p, image: (w.images ?? []).map(abs), creator: { '@id': ORG_ID }, keywords: (w.technology ?? []).join(', '), inLanguage: 'en-IN' }
+  if (w.client) work.sourceOrganization = { '@type': 'Organization', name: w.client }
+  const g = [org, work, crumbs(p, w.name)]
+  if (store.length) { const app = { '@type': 'MobileApplication', name: w.name, description: w.description, applicationCategory: 'ShoppingApplication', operatingSystem: 'iOS, Android', url: w.link ?? undefined, sameAs: store.map((l) => l.url), image: abs(w.images?.[0]), featureList: (w.features ?? []).join('; '), offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' }, author: { '@id': ORG_ID } }; if (w.client) app.publisher = { '@type': 'Organization', name: w.client }; work.about = app; g.push(app) }
+  write(p, page(p, head(p, m, { '@context': 'https://schema.org', '@graph': g }, og)))
 }
 // 404 fallback = full app shell (GitHub Pages serves it for unknown paths)
 fs.writeFileSync(path.join(DIST, '404.html'), page('/404', head('/404', { title: 'Page not found | THE GX GROUP', description: 'This page does not exist.' }, { '@context': 'https://schema.org', ...website })).replace('index,follow,max-image-preview:large,max-snippet:-1', 'noindex'))
@@ -129,7 +139,7 @@ THE GX GROUP is a technology partnership company. It designs, builds, launches a
 ## Capabilities
 ${CAPABILITIES.map((c) => `- ${c.title}: ${c.short} Deliverables: ${c.deliver.join(', ')}. Technologies: ${c.tech.join(', ')}.`).join('\n')}
 
-## Frequently asked questions
+${portfolio.length ? `## Selected work (case studies)\n${portfolio.map((w) => `- [${w.name}](${SITE.url}/work/${w.slug}) — ${w.category}${w.client ? ` for ${w.client}` : ''}. ${w.description}${w.features?.length ? ` Key features: ${w.features.join('; ')}.` : ''}`).join('\n')}\n\n` : ''}## Frequently asked questions
 ${[...FAQS, ...PM_FAQ].map((f) => `- Q: ${f.q}\n  A: ${f.a}`).join('\n')}
 
 ## Pages

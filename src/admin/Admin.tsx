@@ -388,10 +388,13 @@ function PortfolioAdmin() {
   const [rows, setRows] = useState<Row[]>([]); const [edit, setEdit] = useState<Row | null>(null); const [msg, setMsg] = useState('')
   const load = () => sb().from('portfolio_projects').select('*').order('sort_order').then(({ data }) => setRows(data ?? []))
   useEffect(() => { load() }, [])
-  const blank = { slug: '', name: '', category: 'Website', ownership: 'internal', status: 'in_development', description: '', challenge: '', solution: '', technology: [], images: [], link: '', sort_order: rows.length, published: false }
+  const blank = { slug: '', name: '', category: 'Website', ownership: 'internal', status: 'in_development', description: '', challenge: '', solution: '', technology: [], images: [], link: '', client: '', services: [], features: [], links: [], sort_order: rows.length, published: false }
   const save = async () => {
     if (!edit) return; const slug = (edit.slug || edit.name).toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
-    const row: Row = { ...edit, slug, technology: typeof edit.technology === 'string' ? edit.technology.split(',').map((s: string) => s.trim()).filter(Boolean) : edit.technology, images: typeof edit.images === 'string' ? edit.images.split('\n').map((s: string) => s.trim()).filter(Boolean) : edit.images, link: edit.link || null }
+    const row: Row = { ...edit, slug, technology: typeof edit.technology === 'string' ? edit.technology.split(',').map((s: string) => s.trim()).filter(Boolean) : edit.technology, images: typeof edit.images === 'string' ? edit.images.split('\n').map((s: string) => s.trim()).filter(Boolean) : edit.images, link: edit.link || null, client: edit.client || null,
+      services: typeof edit.services === 'string' ? edit.services.split('\n').map((s: string) => s.trim()).filter(Boolean) : edit.services ?? [],
+      features: typeof edit.features === 'string' ? edit.features.split('\n').map((s: string) => s.trim()).filter(Boolean) : edit.features ?? [],
+      links: typeof edit.links === 'string' ? edit.links.split('\n').map((l: string) => l.split('|').map((x) => x.trim())).filter(([a, b]: string[]) => a && b).map(([label, url]: string[]) => ({ label, url })) : edit.links ?? [] }
     delete row.created_at; delete row.updated_at
     const { error } = row.id ? await sb().from('portfolio_projects').update(row).eq('id', row.id) : await sb().from('portfolio_projects').insert(row)
     if (error) return setMsg(error.message); setEdit(null); setMsg(''); load()
@@ -413,6 +416,10 @@ function PortfolioAdmin() {
             <Sel l="Ownership" value={edit.ownership} onChange={(v) => setEdit({ ...edit, ownership: v })} opts={['internal', 'client']} /><Sel l="Status" value={edit.status} onChange={(v) => setEdit({ ...edit, status: v })} opts={['live', 'in_development', 'prototype']} /><In l="Live link" value={edit.link ?? ''} onChange={(e) => setEdit({ ...edit, link: e.target.value })} />
             <div className="sm:col-span-2 lg:col-span-3"><Area l="Description (what it does)" value={edit.description} onChange={(e) => setEdit({ ...edit, description: e.target.value })} /></div>
             <Area l="Challenge" value={edit.challenge ?? ''} onChange={(e) => setEdit({ ...edit, challenge: e.target.value })} /><Area l="Solution" value={edit.solution ?? ''} onChange={(e) => setEdit({ ...edit, solution: e.target.value })} /><Area l="Technology (comma separated)" value={Array.isArray(edit.technology) ? edit.technology.join(', ') : edit.technology} onChange={(e) => setEdit({ ...edit, technology: e.target.value })} />
+            <In l="Client (shown on case study)" value={edit.client ?? ''} onChange={(e) => setEdit({ ...edit, client: e.target.value })} />
+            <Area l="What we delivered (one per line)" value={Array.isArray(edit.services) ? edit.services.join('\n') : edit.services ?? ''} onChange={(e) => setEdit({ ...edit, services: e.target.value })} />
+            <Area l="Key features (one per line)" value={Array.isArray(edit.features) ? edit.features.join('\n') : edit.features ?? ''} onChange={(e) => setEdit({ ...edit, features: e.target.value })} />
+            <div className="sm:col-span-2 lg:col-span-3"><Area l="Buttons — one per line as: Label | https://link" value={Array.isArray(edit.links) ? edit.links.map((l: { label: string; url: string }) => `${l.label} | ${l.url}`).join('\n') : edit.links ?? ''} onChange={(e) => setEdit({ ...edit, links: e.target.value })} /></div>
             <div className="sm:col-span-2"><Area l="Image URLs (one per line)" value={Array.isArray(edit.images) ? edit.images.join('\n') : edit.images} onChange={(e) => setEdit({ ...edit, images: e.target.value })} /><input type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && uploadImg(e.target.files[0])} className="mt-2 text-xs" /></div>
             <div className="space-y-3"><In l="Sort order" type="number" value={edit.sort_order} onChange={(e) => setEdit({ ...edit, sort_order: Number(e.target.value) })} /><label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={edit.published} onChange={(e) => setEdit({ ...edit, published: e.target.checked })} /> Published</label></div>
           </div>

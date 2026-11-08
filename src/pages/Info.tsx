@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useLocation, useParams, Link } from 'react-router-dom'
 import { CAPABILITIES, PARTNERSHIP_POINTS, PROCESS, SITE } from '../content/site'
 import { Band, Button, Eyebrow, MaskText, PageHero, Reveal, Section, SpotCard } from '../components/ui'
-import { Faq, STATUS_LABEL, TwoPaths, WorkCard, usePortfolio, type Portfolio } from '../components/blocks'
+import { Faq, STATUS_LABEL, TwoPaths, WorkCard, preloadedPortfolio, usePortfolio, type Portfolio } from '../components/blocks'
 import { useMeta } from '../lib/seo'
 import { db, track } from '../lib/supabase'
 
@@ -145,26 +145,50 @@ export function Work() {
 
 export function WorkDetail() {
   const { slug } = useParams()
-  const [p, setP] = useState<Portfolio | null | undefined>(undefined)
-  useEffect(() => { db().then((c) => c.from('portfolio_projects').select('*').eq('slug', slug!).eq('published', true).maybeSingle()).then(({ data }) => setP(data as Portfolio | null)) }, [slug])
+  const [p, setP] = useState<Portfolio | null | undefined>(preloadedPortfolio()?.find((r) => r.slug === slug))
+  useEffect(() => { db().then((c) => c.from('portfolio_projects').select('*').eq('slug', slug!).eq('published', true).maybeSingle()).then(({ data, error }) => { if (!error) setP(data as Portfolio | null) }) }, [slug])
   useMeta(`/work/${slug}`, p ? { title: `${p.name} — ${p.category} | THE GX GROUP`, description: p.description.slice(0, 155) } : undefined)
   if (p === undefined) return <Section className="pt-44"><div className="h-64 animate-pulse bg-surface" /></Section>
   if (!p) return <NotFound />
+  const meta: [string, string][] = [['Client', p.client || (p.ownership === 'client' ? 'Client project' : 'Internal product')], ['Category', p.category], ['Status', STATUS_LABEL[p.status] ?? p.status]]
+  const links = p.links?.length ? p.links : p.link ? [{ label: 'Visit live', url: p.link }] : []
   return (
     <>
-      <PageHero eyebrow={`${p.category.toUpperCase()} · ${(STATUS_LABEL[p.status] ?? p.status).toUpperCase()}`} lines={[p.name]} intro={p.description} />
-      <Section className="pb-12">
-        {p.images?.[0] && <Reveal><img src={p.images[0]} alt={p.name} className="w-full border border-line" /></Reveal>}
-        <div className="mt-8 grid gap-10 md:grid-cols-3">
-          {p.challenge && <Block t="Challenge" d={p.challenge} />}
-          {p.solution && <Block t="Solution" d={p.solution} />}
-          <div className="border-t border-line pt-5"><p className="font-display text-[11px] font-semibold tracking-label text-accent">TECHNOLOGY</p><p className="mt-3 flex flex-wrap gap-2">{p.technology?.map((t) => <span key={t} className="border border-line px-2.5 py-1 text-xs">{t}</span>)}</p>
-            <p className="mt-5 text-sm text-mute">{p.ownership === 'client' ? 'Client project' : 'Internal product'}</p>
-            {p.link && <a href={p.link} target="_blank" rel="noopener" className="mt-4 inline-block text-sm text-accent">Visit live →</a>}</div>
-        </div>
-        {p.images?.slice(1).map((src) => <img key={src} src={src} alt={p.name} loading="lazy" className="mt-6 w-full border border-line" />)}
-        <div className="mt-16"><Link to="/work" className="navlink text-sm text-mute">← All work</Link></div>
-      </Section>
+      <PageHero eyebrow={`CASE STUDY · ${p.category.toUpperCase()}`} lines={[p.name]} intro={p.description} />
+      <Band tone="dark">
+        <Section className="pb-14">
+          <div className="grid gap-px border border-line bg-line sm:grid-cols-3">
+            {meta.map(([k, v]) => <div key={k} className="bg-bg px-5 py-4"><p className="font-display text-[11px] font-semibold tracking-label text-mute">{k.toUpperCase()}</p><p className="mt-1.5 font-display font-semibold">{v}</p></div>)}
+          </div>
+          {links.length > 0 && <div className="mt-6 flex flex-wrap gap-3">{links.map((l, i) => <Button key={l.url} href={l.url} variant={i === 0 ? 'primary' : 'ghost'} onClick={() => track('portfolio_outbound', { slug: p.slug, to: l.label })}>{l.label}</Button>)}</div>}
+          {p.images?.[0] && <Reveal className="mt-10"><img src={p.images[0]} alt={`${p.name} — ${p.category}`} width={1600} height={1000} className="w-full border border-line" /></Reveal>}
+        </Section>
+      </Band>
+      <Band tone="light" className="py-10">
+        <Section className="py-6">
+          <div className="grid gap-10 md:grid-cols-2">
+            {p.challenge && <Block t="The challenge" d={p.challenge} />}
+            {p.solution && <Block t="Our solution" d={p.solution} />}
+          </div>
+          {!!p.features?.length && (
+            <div className="mt-14">
+              <Eyebrow>KEY FEATURES</Eyebrow>
+              <ul className="mt-6 grid gap-x-10 gap-y-4 sm:grid-cols-2">{p.features.map((f) => <li key={f} className="flex gap-3 leading-relaxed"><span className="mt-[9px] h-1.5 w-1.5 shrink-0 rotate-45 bg-accent" />{f}</li>)}</ul>
+            </div>
+          )}
+          {p.images?.[1] && <Reveal className="mt-14"><img src={p.images[1]} alt={`${p.name} — how it works`} width={1600} height={1000} loading="lazy" className="w-full border border-line" /></Reveal>}
+          <div className="mt-14 grid gap-10 md:grid-cols-2">
+            {!!p.services?.length && <div className="border-t border-line pt-5"><p className="font-display text-[11px] font-semibold tracking-label text-accent">WHAT WE DELIVERED</p><ul className="mt-4 space-y-2">{p.services.map((x) => <li key={x}>{x}</li>)}</ul></div>}
+            <div className="border-t border-line pt-5"><p className="font-display text-[11px] font-semibold tracking-label text-accent">TECHNOLOGY</p><p className="mt-4 flex flex-wrap gap-2">{p.technology?.map((t) => <span key={t} className="border border-line px-2.5 py-1 text-xs">{t}</span>)}</p></div>
+          </div>
+          {p.images?.slice(2).map((src) => <img key={src} src={src} alt={p.name} width={1600} height={1000} loading="lazy" className="mt-14 w-full border border-line" />)}
+          <div className="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-line pt-10">
+            <div><p className="font-display text-2xl font-bold tracking-tight">Building something like this?</p><p className="mt-2 text-mute">Partner with us, or hire us to build it.</p></div>
+            <div className="flex flex-wrap gap-3"><Button to="/partner-with-us" onClick={() => track('partner_cta_click', { where: `work_${p.slug}` })}>Partner with us</Button><Button to="/technology-services" variant="ghost" onClick={() => track('service_cta_click', { where: `work_${p.slug}` })}>Request a consultation</Button></div>
+          </div>
+          <div className="mt-12"><Link to="/work" className="navlink text-sm text-mute">← All work</Link></div>
+        </Section>
+      </Band>
     </>
   )
 }
