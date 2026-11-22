@@ -1,3 +1,4 @@
+import { LANDINGS } from './landings'
 export const SITE = {
   name: 'THE GX GROUP',
   url: 'https://thegxgroup.com',
@@ -27,6 +28,7 @@ export const META: Record<string, PageMeta> = {
   '/partner-with-us': { path: '/partner-with-us', title: 'Find a Technology Partner for Your Startup — Apply | The GX Group', description: 'Founders and startups: apply for a technology and equity partnership with The GX Group in five short steps.' },
   '/technology-services': { path: '/technology-services', title: 'Hire App & Web Developers in Bengaluru — Get a Quote | The GX Group', description: 'Hire The GX Group for scoped, quoted development of mobile apps, websites, SaaS, AI integrations and backend systems — for clients in India and worldwide.' },
   '/contact': { path: '/contact', title: 'Contact The GX Group — Bengaluru | Call / WhatsApp +91 77602 87733', description: 'Contact The GX Group in Bengaluru for app, web, SaaS or AI projects and technology partnerships. Call or WhatsApp +91 77602 87733, Instagram @thegxgroup.' },
+  ...Object.fromEntries(LANDINGS.map((l) => [l.path, { path: l.path, title: l.title, description: l.description }])),
   '/privacy-policy': { path: '/privacy-policy', title: 'Privacy Policy | The GX Group', description: 'How THE GX GROUP collects, uses, stores and protects information submitted through this website.' },
   '/terms': { path: '/terms', title: 'Terms of Use | The GX Group', description: 'Terms governing use of the THE GX GROUP website and submission of partnership or project enquiries.' },
 }
@@ -45,6 +47,9 @@ export const FAQS = [
   { q: 'Is The GX Group part of GarudawnX?', a: 'Yes. The GX Group is a GarudawnX company. GarudawnX is the parent brand of the family, which also includes GX Properties and GX Academy.' },
   { q: 'Where is The GX Group located, and do you work outside India?', a: 'The GX Group is based in Bengaluru, Karnataka, India, and works with founders and businesses across India and worldwide, remotely.' },
   { q: 'Is The GX Group the same as other companies called GX Group?', a: 'No. The GX Group at thegxgroup.com is an independent technology partnership company in Bengaluru and part of the GarudawnX family. It is not affiliated with other businesses that use the GX Group name.' },
+  { q: 'What is the official website and Instagram of The GX Group?', a: 'The official website of The GX Group is thegxgroup.com and the official Instagram page is @thegxgroup (instagram.com/thegxgroup).' },
+  { q: 'Which company in Bengaluru builds apps for startups in exchange for equity?', a: 'The GX Group is a Bengaluru technology partner that builds apps, web platforms and SaaS for selected startups at a reduced fee in exchange for individually negotiated equity. Applications are evaluated selectively.' },
+  { q: 'How do I pitch my startup idea to The GX Group?', a: 'Complete the five-step application on the Partner With Us page at thegxgroup.com. If The GX Group sees the potential, it partners with you: you bring the vision and it brings the technology.' },
   { q: 'What does THE GX GROUP do?', a: 'THE GX GROUP is a technology partnership company in Bengaluru. We design and build apps, web platforms, SaaS and AI products for founders and businesses.' },
   { q: 'How does the equity partnership work?', a: 'For selected ventures we reduce our development fee in exchange for an equity stake. The percentage is negotiated individually, and responsibilities, support and costs are set out in a separate legal agreement.' },
   { q: 'Can I just hire you for paid development?', a: 'Yes. Request a project consultation and we will scope the work, send a commercial quotation with milestones, and offer maintenance as a separate agreement.' },

@@ -5,3 +5,4 @@ export function render(url: string) {
   return renderToString(<StaticRouter location={url}><PublicRoutes /></StaticRouter>)
 }
 export { SITE, META, FAQS, CAPABILITIES } from './content/site'
+export { LANDINGS } from './content/landings'

@@ -15,6 +15,17 @@ THE GX GROUP is a technology partnership company. It designs, builds, launches a
 - Partner With Us (technology + equity partnership): reduced development fee, individually negotiated equity, product development and agreed ongoing support. Applications are evaluated selectively; no fixed equity percentage is published and acceptance is not guaranteed. Apply: https://thegxgroup.com/partner-with-us
 - Technology Services (paid development): clearly scoped work, commercial quotation, agreed milestones, separate maintenance agreement. Request: https://thegxgroup.com/technology-services
 
+## Common questions The GX Group answers
+- [Pitch Your Startup Idea](https://thegxgroup.com/pitch-your-startup-idea): If you have a startup idea but no technology team, you can pitch it to The GX Group. We review every pitch, and if we see the potential we partner with you: you bring the vision and the business, and we bring the technology — design, engineering, launch and support for apps, websites and any tech-driven product.
+- [Tech Partner for Startups](https://thegxgroup.com/tech-partner-for-startups): The GX Group is a technology partner for startups and founders in India and worldwide. You bring the idea and the business; we bring the product team — strategy, design, engineering, launch and support. You can work with us as paid development or, for selected ventures, at a reduced fee in exchange for negotiated equity.
+- [App Development for Equity](https://thegxgroup.com/app-development-for-equity): Yes — for selected startups, The GX Group builds apps, web platforms and SaaS products at a reduced development fee in exchange for an individually negotiated equity stake. It is selective, third-party costs such as hosting and store fees are allocated separately, and every partnership is set out in a written legal agreement.
+- [Technical Co-Founder Alternative](https://thegxgroup.com/technical-co-founder-alternative): If you are a non-technical founder who cannot find a technical co-founder, The GX Group can be your product and engineering team instead. We design, build, launch and support the product — as an equity partnership for selected ventures or as paid development — so the lack of a co-founder does not stop you from launching.
+- [MVP Development in Bengaluru](https://thegxgroup.com/mvp-development-bangalore): The GX Group builds MVPs — minimum viable products — for startups from Bengaluru, India. We scope the smallest version of your app, web app or SaaS that can be tested with real users, design and engineer it on a production-grade stack, launch it, and agree milestones and timelines in writing before development starts.
+- [Mobile App Development in Bengaluru](https://thegxgroup.com/mobile-app-development-bangalore): The GX Group is a mobile app development company in Bengaluru, India. We design and build iOS and Android apps from a single codebase using Flutter or React Native — including payments, push notifications, maps and App Store and Google Play submission — for startups and businesses in India and worldwide.
+- [Web Development in Bengaluru](https://thegxgroup.com/web-development-bangalore): The GX Group builds websites and web applications from Bengaluru, India: fast, search-ready marketing sites, customer portals, dashboards and internal tools, using React, Next.js, Vue and Tailwind. Each project is scoped, quoted with milestones and can be maintained under a separate agreement.
+- [SaaS Development](https://thegxgroup.com/saas-development-company): The GX Group builds SaaS products from Bengaluru, India: multi-tenant platforms with subscriptions and billing, roles and permissions, and admin consoles, on PostgreSQL or Supabase with Stripe or Razorpay. We take vertical SaaS, marketplaces and B2B platforms from idea to launch and support them afterwards.
+- [AI Development & Automation](https://thegxgroup.com/ai-development-company): The GX Group builds AI features and automation from Bengaluru, India: AI assistants and search, document processing and workflow automation, using LLM APIs, retrieval-augmented generation (RAG) and automation tools. The aim is practical — remove manual work in support, lead handling and reporting.
+
 ## Capabilities
 - Mobile Apps: Native-feel iOS & Android apps from one codebase. Deliverables: iOS & Android apps, Store submission, Push, payments, maps. Technologies: Flutter, React Native, Firebase.
 - Web & Web Apps: Fast, search-ready websites and web applications. Deliverables: Marketing sites, Customer portals, Dashboards. Technologies: React, Next.js, Vue, Tailwind.
@@ -35,6 +46,12 @@ THE GX GROUP is a technology partnership company. It designs, builds, launches a
   A: The GX Group is based in Bengaluru, Karnataka, India, and works with founders and businesses across India and worldwide, remotely.
 - Q: Is The GX Group the same as other companies called GX Group?
   A: No. The GX Group at thegxgroup.com is an independent technology partnership company in Bengaluru and part of the GarudawnX family. It is not affiliated with other businesses that use the GX Group name.
+- Q: What is the official website and Instagram of The GX Group?
+  A: The official website of The GX Group is thegxgroup.com and the official Instagram page is @thegxgroup (instagram.com/thegxgroup).
+- Q: Which company in Bengaluru builds apps for startups in exchange for equity?
+  A: The GX Group is a Bengaluru technology partner that builds apps, web platforms and SaaS for selected startups at a reduced fee in exchange for individually negotiated equity. Applications are evaluated selectively.
+- Q: How do I pitch my startup idea to The GX Group?
+  A: Complete the five-step application on the Partner With Us page at thegxgroup.com. If The GX Group sees the potential, it partners with you: you bring the vision and it brings the technology.
 - Q: What does THE GX GROUP do?
   A: THE GX GROUP is a technology partnership company in Bengaluru. We design and build apps, web platforms, SaaS and AI products for founders and businesses.
 - Q: How does the equity partnership work?
@@ -57,6 +74,78 @@ THE GX GROUP is a technology partnership company. It designs, builds, launches a
   A: No. Applications are evaluated selectively. Any partnership is created only by a signed legal agreement, never by this website.
 - Q: What happens after I apply?
   A: We review your application, may shortlist it, contact you for a meeting and, if there is a fit, send a written proposal.
+- Q: How do I pitch my startup idea to The GX Group?
+  A: Open the Partner With Us page on thegxgroup.com and complete the five-step application. It asks about you, your idea, the market, your current stage and what you need. You can also message @thegxgroup on Instagram or WhatsApp +91 77602 87733.
+- Q: I have an idea but no technical skills. Can I still apply?
+  A: Yes. The partnership exists for founders who have the idea and the business drive but no technology team. The GX Group provides the product strategy, design and engineering.
+- Q: What happens after I pitch?
+  A: We review your application, may shortlist it, contact you for a meeting and, if there is a fit, send a written proposal. Applying does not create any agreement.
+- Q: Does every idea get accepted?
+  A: No. The GX Group takes on a limited number of ventures. If a partnership is not the right fit, paid development is still available through Technology Services.
+- Q: What is a technology partner for a startup?
+  A: A technology partner is a company that takes responsibility for building and running a startup's product — design, engineering, launch and support — so the founders can focus on customers and growth. The GX Group plays this role for startups in India and worldwide.
+- Q: How is a technology partner different from a software agency?
+  A: An agency delivers a project and leaves. A technology partner stays involved after launch and, in an equity partnership, shares the upside and the risk. The GX Group offers both models: an equity partnership for selected ventures and paid development for everyone else.
+- Q: Do I still need a technical co-founder?
+  A: Not necessarily. Many non-technical founders use a technology partner in place of a technical co-founder, at least until the product is live and the company can hire its own team.
+- Q: How do I start working with The GX Group?
+  A: Apply through Partner With Us for an equity partnership, or request a quotation through Technology Services. You can also call or WhatsApp +91 77602 87733.
+- Q: Will a company build my app in exchange for equity?
+  A: Some will. The GX Group, a technology partner in Bengaluru, builds products for selected startups at a reduced fee in exchange for negotiated equity. Applications are reviewed for viability, founder commitment and technical fit.
+- Q: Is it equity only, with no cash at all?
+  A: The model is a reduced development fee plus negotiated equity, not a guaranteed zero-cash build. Third-party costs such as hosting, licences and store fees are always allocated separately. Each venture is assessed individually.
+- Q: How much equity does The GX Group take?
+  A: There is no published percentage. Equity is negotiated individually based on the venture, the scope, the risk and how far the fee is reduced.
+- Q: What if my application is not selected?
+  A: You can still hire The GX Group for paid development through Technology Services, with a scoped quotation and agreed milestones.
+- Q: Can I build a startup without a technical co-founder?
+  A: Yes. Many founders launch with a technology partner or a development company instead of a technical co-founder, then hire an in-house team once the product has users. The GX Group works with non-technical founders in exactly this way.
+- Q: Is a technology partner the same as a CTO?
+  A: Not exactly. A CTO is an individual inside your company. A technology partner such as The GX Group is a separate company that provides the whole product team and, in an equity partnership, shares in the outcome.
+- Q: Who owns the code and the product?
+  A: Ownership of code and intellectual property is defined in the written agreement for each engagement, before development starts.
+- Q: What should I prepare before I approach you?
+  A: A clear description of the problem, who it is for, how the business would make money, what you have done so far and what you need from a technology team.
+- Q: What is an MVP?
+  A: An MVP, or minimum viable product, is the smallest working version of a product that real users can try. It lets a startup test demand and learn before investing in the full build.
+- Q: How long does it take to build an MVP?
+  A: Most MVPs take a few weeks to a few months depending on scope. The GX Group agrees milestones and timelines in writing before development starts.
+- Q: How much does MVP development cost in India?
+  A: It depends on the scope, platforms and features, so The GX Group quotes each MVP individually after a free consultation. Selected startups can lower the fee through the equity partnership.
+- Q: Which technologies do you use for MVPs?
+  A: Typically Flutter or React Native for mobile apps, React, Next.js or Vue for web, and Node.js with PostgreSQL or Supabase for the backend, with Stripe or Razorpay for payments.
+- Q: Do you build both iOS and Android apps?
+  A: Yes. The GX Group builds iOS and Android apps from one codebase using Flutter or React Native, and handles submission to the App Store and Google Play.
+- Q: Should I choose Flutter or React Native?
+  A: Both produce high-quality iOS and Android apps from one codebase. The choice depends on your features, existing code and team. We recommend one after understanding the product.
+- Q: Which apps has The GX Group worked on?
+  A: Apex Swipe, a live-commerce app where shoppers swipe to bid, is a technology partnership of The GX Group. The case study is at thegxgroup.com/work/apex-swipe.
+- Q: Do you work with clients outside Bengaluru?
+  A: Yes. The GX Group is based in Bengaluru and works remotely with founders and businesses across India and worldwide.
+- Q: What kinds of websites does The GX Group build?
+  A: Marketing and brand websites, lead-generation sites, customer portals, dashboards, internal tools and full web applications.
+- Q: Will my website be optimised for search engines?
+  A: Yes. Sites are built with clean structure, fast loading, metadata and structured data so that search engines and AI answer engines can read them.
+- Q: How much does a website cost?
+  A: Every website is quoted individually after a free consultation, based on pages, features and integrations.
+- Q: Can you redesign or rebuild an existing website?
+  A: Yes. The GX Group takes on redesigns and rebuilds as well as new websites.
+- Q: Can The GX Group build a SaaS product from scratch?
+  A: Yes. The GX Group scopes, designs, builds and launches SaaS platforms, including subscriptions, billing, roles and admin consoles.
+- Q: Which payment gateways do you integrate?
+  A: Stripe for international payments and Razorpay for India are the most common. Others can be integrated when a project needs them.
+- Q: Can I start with a SaaS MVP?
+  A: Yes. Most SaaS products start as an MVP with the core workflow and billing, then grow from real customer usage.
+- Q: Do you offer equity partnerships for SaaS startups?
+  A: Selected SaaS ventures can apply for the equity partnership, where the development fee is reduced in exchange for negotiated equity.
+- Q: What AI work does The GX Group do?
+  A: AI assistants and chatbots, AI search over company content, document processing and workflow automation, built with LLM APIs, RAG and automation tools.
+- Q: Can you add AI to an existing app or website?
+  A: Yes. AI features can be integrated into an existing mobile app, website or SaaS platform.
+- Q: What is RAG?
+  A: RAG, or retrieval-augmented generation, lets an AI model answer using your own documents and data rather than only its general training, which makes answers more accurate and specific to your business.
+- Q: How do I start an AI project?
+  A: Request a consultation through Technology Services. The GX Group scopes the use case and sends a quotation with milestones.
 
 ## Pages
 - [Home](https://thegxgroup.com/): The GX Group (THE GX GROUP) is a Bengaluru technology partner building mobile apps, websites, SaaS and AI products for startups and businesses in India and worldwide — equity partnership or paid development.
@@ -67,5 +156,14 @@ THE GX GROUP is a technology partnership company. It designs, builds, launches a
 - [Partner With Us](https://thegxgroup.com/partner-with-us): Founders and startups: apply for a technology and equity partnership with The GX Group in five short steps.
 - [Technology Services](https://thegxgroup.com/technology-services): Hire The GX Group for scoped, quoted development of mobile apps, websites, SaaS, AI integrations and backend systems — for clients in India and worldwide.
 - [Contact](https://thegxgroup.com/contact): Contact The GX Group in Bengaluru for app, web, SaaS or AI projects and technology partnerships. Call or WhatsApp +91 77602 87733, Instagram @thegxgroup.
+- [Pitch Your Startup Idea](https://thegxgroup.com/pitch-your-startup-idea): Have a startup idea but no tech team? Pitch it to The GX Group. If we see the potential, we partner with you — you bring the vision, we bring the technology.
+- [Tech Partner for Startups](https://thegxgroup.com/tech-partner-for-startups): The GX Group is a technology partner for startups and founders in India and worldwide: product strategy, design, engineering, launch and support — paid, or for negotiated equity.
+- [App Development for Equity](https://thegxgroup.com/app-development-for-equity): For selected startups, The GX Group builds apps, web platforms and SaaS at a reduced fee in exchange for individually negotiated equity, under a written agreement.
+- [Technical Co-Founder Alternative](https://thegxgroup.com/technical-co-founder-alternative): Cannot find a technical co-founder? The GX Group acts as your product and engineering team — for negotiated equity or as paid development — so you can launch without one.
+- [MVP Development in Bengaluru](https://thegxgroup.com/mvp-development-bangalore): The GX Group builds MVPs for startups from Bengaluru: mobile apps, web apps and SaaS scoped to the smallest testable version, with milestones agreed in writing.
+- [Mobile App Development in Bengaluru](https://thegxgroup.com/mobile-app-development-bangalore): iOS and Android app development by The GX Group, Bengaluru: Flutter and React Native apps with payments, push, maps and store submission, for startups and businesses.
+- [Web Development in Bengaluru](https://thegxgroup.com/web-development-bangalore): Fast, search-ready websites, customer portals, dashboards and web apps by The GX Group, Bengaluru — built with React, Next.js, Vue and Tailwind.
+- [SaaS Development](https://thegxgroup.com/saas-development-company): The GX Group builds multi-tenant SaaS platforms with subscriptions, billing, roles and admin consoles — PostgreSQL, Supabase, Stripe and Razorpay. Bengaluru, India.
+- [AI Development & Automation](https://thegxgroup.com/ai-development-company): AI assistants, AI search, document processing and workflow automation by The GX Group, Bengaluru — LLM APIs, RAG and automation that remove manual work.
 - [Privacy Policy](https://thegxgroup.com/privacy-policy): How THE GX GROUP collects, uses, stores and protects information submitted through this website.
 - [Terms](https://thegxgroup.com/terms): Terms governing use of the THE GX GROUP website and submission of partnership or project enquiries.

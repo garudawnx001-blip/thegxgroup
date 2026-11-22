@@ -5,6 +5,8 @@ import { Intro } from './components/Intro'
 import Home from './pages/Home'
 import { About, Capabilities, Legal, NotFound, PartnershipModel, Work, WorkDetail } from './pages/Info'
 import { Contact, PartnerWithUs, TechnologyServices } from './pages/Forms'
+import Landing from './pages/Landing'
+import { LANDINGS } from './content/landings'
 
 const Admin = lazy(() => import('./admin/Admin'))
 
@@ -26,6 +28,7 @@ export function PublicRoutes() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<Legal kind="privacy" />} />
           <Route path="/terms" element={<Legal kind="terms" />} />
+          {LANDINGS.map((l) => <Route key={l.path} path={l.path} element={<Landing l={l} />} />)}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </PageShell>

@@ -7,7 +7,8 @@ import { pathToFileURL } from 'node:url'
 const DIST = path.resolve('dist')
 const { render } = await import(pathToFileURL(path.resolve('dist-ssr/entry-server.js')).href)
 const site = await import(pathToFileURL(path.resolve('dist-ssr/entry-server.js')).href)
-const { SITE, META, FAQS, CAPABILITIES } = site
+const { SITE, META, FAQS, CAPABILITIES, LANDINGS } = site
+const LAND = Object.fromEntries(LANDINGS.map((l) => [l.path, l]))
 const template = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8')
 const today = new Date().toISOString().slice(0, 10)
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
@@ -37,6 +38,7 @@ const org = {
   sameAs: [SITE.instagram, 'https://instagram.com/thegxgroup', 'https://garudawnx.com'],
   knowsAbout: ['Mobile app development', 'iOS app development', 'Android app development', 'Flutter', 'React Native', 'Website development', 'Web application development', 'SaaS development', 'AI and automation', 'Generative AI integration', 'Backend engineering', 'UI/UX design', 'MVP development for startups', 'Live commerce apps', 'Technology equity partnerships'],
   telephone: [SITE.phone, SITE.phone2],
+  hasOfferCatalog: { '@type': 'OfferCatalog', name: 'The GX Group services', itemListElement: LANDINGS.map((l) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: l.service, url: SITE.url + l.path } })) },
   contactPoint: [{ '@type': 'ContactPoint', contactType: 'sales', email: SITE.email, telephone: SITE.phone, areaServed: 'IN', availableLanguage: ['English', 'Kannada', 'Hindi'] }, { '@type': 'ContactPoint', contactType: 'customer support', telephone: SITE.phone2, areaServed: 'IN', availableLanguage: ['English', 'Kannada', 'Hindi'] }],
 }
 const website = { '@type': 'WebSite', '@id': `${SITE.url}/#website`, url: SITE.url + '/', name: 'The GX Group', alternateName: ['THE GX GROUP', 'GX Group', 'thegxgroup.com'], publisher: { '@id': ORG_ID }, inLanguage: 'en' }
@@ -49,12 +51,13 @@ const PM_FAQ = [
 ]
 const service = (name, desc, p) => ({ '@type': 'Service', name, description: desc, provider: { '@id': ORG_ID }, areaServed: 'IN', url: SITE.url + p })
 
-const SHORT = { '/': 'Home', '/about': 'About', '/capabilities': 'Capabilities', '/partnership-model': 'Partnership Model', '/work': 'Our Work', '/partner-with-us': 'Partner With Us', '/technology-services': 'Technology Services', '/contact': 'Contact', '/privacy-policy': 'Privacy Policy', '/terms': 'Terms' }
+const SHORT = { '/': 'Home', '/about': 'About', '/capabilities': 'Capabilities', '/partnership-model': 'Partnership Model', '/work': 'Our Work', '/partner-with-us': 'Partner With Us', '/technology-services': 'Technology Services', '/contact': 'Contact', '/privacy-policy': 'Privacy Policy', '/terms': 'Terms', ...Object.fromEntries(LANDINGS.map((l) => [l.path, l.short])) }
 function graphFor(p, m) {
   const g = [org, website, { '@type': p === '/about' ? 'AboutPage' : p === '/contact' ? 'ContactPage' : 'WebPage', '@id': SITE.url + p + '#webpage', url: SITE.url + p, name: m.title, description: m.description, isPartOf: { '@id': `${SITE.url}/#website` }, about: { '@id': ORG_ID }, inLanguage: 'en-IN', dateModified: today }, crumbs(p, SHORT[p] ?? m.title)]
   if (p === '/') g.push(faqLd(FAQS))
   if (p === '/partnership-model') g.push(faqLd(PM_FAQ), service('Technology & equity partnership', 'Product development at a reduced fee in exchange for individually negotiated equity, with defined support.', p))
   if (p === '/technology-services') g.push(service('Paid technology development', 'Scoped, quoted development of mobile apps, websites, web apps, SaaS, AI integrations and backends with agreed milestones.', p))
+  if (LAND[p]) g.push(faqLd(LAND[p].faqs), { ...service(LAND[p].service, LAND[p].description, p), serviceType: LAND[p].service, areaServed: [{ '@type': 'City', name: 'Bengaluru' }, { '@type': 'Country', name: 'India' }, 'Worldwide'], audience: { '@type': 'Audience', audienceType: 'Startups, founders and businesses' } })
   if (p === '/capabilities') g.push({ '@type': 'ItemList', name: 'Capabilities', itemListElement: CAPABILITIES.map((c, i) => ({ '@type': 'ListItem', position: i + 1, item: service(c.title, `${c.short} Deliverables: ${c.deliver.join(', ')}. Technologies: ${c.tech.join(', ')}.`, `/capabilities#${c.id}`) })) })
   return { '@context': 'https://schema.org', '@graph': g }
 }
@@ -67,7 +70,7 @@ function head(p, m, extraLd, ogImg) {
     `<meta name="description" content="${esc(m.description)}" />`,
     `<link rel="canonical" href="${url}" />`,
     `<link rel="alternate" hreflang="en" href="${url}" />`, `<link rel="alternate" hreflang="x-default" href="${url}" />`,
-    `<meta name="keywords" content="The GX Group, GX Group, THE GX GROUP, thegxgroup, app development company Bengaluru, mobile app developers India, web development company, SaaS development company, AI development company, technology partner for startups, tech co-founder, MVP development, GarudawnX" />`,
+    `<meta name="keywords" content="${LAND[p] ? esc(LAND[p].keywords) + ', ' : ''}The GX Group, GX Group, THE GX GROUP, thegxgroup, app development company Bengaluru, mobile app developers India, web development company, SaaS development company, AI development company, technology partner for startups, tech co-founder, MVP development, GarudawnX" />`,
     `<meta name="author" content="The GX Group" />`, `<meta name="application-name" content="The GX Group" />`, `<meta name="apple-mobile-web-app-title" content="The GX Group" />`,
     `<meta name="geo.region" content="IN-KA" />`, `<meta name="geo.placename" content="Bengaluru" />`,
     `<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />`,
@@ -99,7 +102,7 @@ for (const w of portfolio) {
 fs.writeFileSync(path.join(DIST, '404.html'), page('/404', head('/404', { title: 'Page not found | THE GX GROUP', description: 'This page does not exist.' }, { '@context': 'https://schema.org', ...website })).replace('index,follow,max-image-preview:large,max-snippet:-1', 'noindex'))
 
 // sitemap
-const urls = [...routes.map((p) => ({ loc: SITE.url + (p === '/' ? '/' : p), pri: p === '/' ? '1.0' : ['/partner-with-us', '/technology-services', '/capabilities', '/partnership-model'].includes(p) ? '0.9' : ['/privacy-policy', '/terms'].includes(p) ? '0.3' : '0.7', mod: today })),
+const urls = [...routes.map((p) => ({ loc: SITE.url + (p === '/' ? '/' : p), pri: p === '/' ? '1.0' : ['/partner-with-us', '/technology-services', '/capabilities', '/partnership-model'].includes(p) || LAND[p] ? '0.9' : ['/privacy-policy', '/terms'].includes(p) ? '0.3' : '0.7', mod: today })),
   ...portfolio.map((w) => ({ loc: `${SITE.url}/work/${w.slug}`, pri: '0.6', mod: String(w.updated_at).slice(0, 10) }))]
 fs.writeFileSync(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${u.loc}</loc><lastmod>${u.mod}</lastmod><priority>${u.pri}</priority></url>`).join('\n')}\n</urlset>\n`)
 
@@ -145,11 +148,14 @@ THE GX GROUP is a technology partnership company. It designs, builds, launches a
 - Partner With Us (technology + equity partnership): reduced development fee, individually negotiated equity, product development and agreed ongoing support. Applications are evaluated selectively; no fixed equity percentage is published and acceptance is not guaranteed. Apply: ${SITE.url}/partner-with-us
 - Technology Services (paid development): clearly scoped work, commercial quotation, agreed milestones, separate maintenance agreement. Request: ${SITE.url}/technology-services
 
+## Common questions The GX Group answers
+${LANDINGS.map((l) => `- [${l.short}](${SITE.url}${l.path}): ${l.answer}`).join('\n')}
+
 ## Capabilities
 ${CAPABILITIES.map((c) => `- ${c.title}: ${c.short} Deliverables: ${c.deliver.join(', ')}. Technologies: ${c.tech.join(', ')}.`).join('\n')}
 
 ${portfolio.length ? `## Selected work (case studies)\n${portfolio.map((w) => `- [${w.name}](${SITE.url}/work/${w.slug}) — ${w.category}${w.client ? (w.ownership === 'partner' ? ` — technology partnership with ${w.client}` : ` for ${w.client}`) : ''}. ${w.description}${w.features?.length ? ` Key features: ${w.features.join('; ')}.` : ''}`).join('\n')}\n\n` : ''}## Frequently asked questions
-${[...FAQS, ...PM_FAQ].map((f) => `- Q: ${f.q}\n  A: ${f.a}`).join('\n')}
+${[...FAQS, ...PM_FAQ, ...LANDINGS.flatMap((l) => l.faqs)].map((f) => `- Q: ${f.q}\n  A: ${f.a}`).join('\n')}
 
 ## Pages
 ${routes.map((p) => `- [${SHORT[p]}](${SITE.url}${p === '/' ? '/' : p}): ${META[p].description}`).join('\n')}

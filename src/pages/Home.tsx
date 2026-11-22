@@ -1,7 +1,8 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { CAPABILITIES, FAQS, PROCESS } from '../content/site'
+import { CAPABILITIES, FAQS, PROCESS, SITE } from '../content/site'
+import { LANDINGS } from '../content/landings'
 import { ParticleMark } from '../components/ParticleMark'
 import { Band, Button, Eyebrow, MaskText, Reveal, Section, SpotCard } from '../components/ui'
 import { Faq, TwoPaths, WorkStrip } from '../components/blocks'
@@ -30,7 +31,7 @@ export default function Home() {
       <Band tone="dark"><Process /></Band>
       <Band tone="light"><Capabilities /></Band>
       <Band tone="dark"><WorkStrip /></Band>
-      <Band tone="light" className="pb-14"><Faq items={FAQS} /><FinalCta /></Band>
+      <Band tone="light" className="pb-14"><Solutions /><Faq items={FAQS} /><FinalCta /></Band>
     </>
   )
 }
@@ -152,7 +153,27 @@ function FinalCta() {
         <div className="relative mt-10 flex flex-wrap gap-3">
           <Button to="/partner-with-us" onClick={() => track('partner_cta_click', { where: 'final' })}>Apply for a Partnership</Button>
           <Button to="/technology-services" variant="ghost" onClick={() => track('service_cta_click', { where: 'final' })}>Request a Consultation</Button>
+          <Button href={SITE.instagram} variant="ghost" onClick={() => track('instagram_click', { where: 'final' })}>Follow @thegxgroup on Instagram ↗</Button>
         </div>
+      </div>
+    </Section>
+  )
+}
+
+function Solutions() {
+  return (
+    <Section className="py-14 sm:py-20">
+      <Eyebrow>WHAT ARE YOU LOOKING FOR?</Eyebrow>
+      <MaskText lines={['Find your', 'starting point.']} className="mt-5 font-display text-[clamp(2rem,4.6vw,3.6rem)] font-bold leading-[1.02] tracking-[-0.03em]" />
+      <div className="mt-10 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+        {LANDINGS.map((l, i) => (
+          <Reveal key={l.path} delay={(i % 3) * 0.06} className="bg-bg">
+            <Link to={l.path} className="group block h-full p-7">
+              <h3 className="font-display text-lg font-bold tracking-tight group-hover:text-accent">{l.short} <span aria-hidden className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span></h3>
+              <p className="mt-2 text-sm leading-relaxed text-mute">{l.description}</p>
+            </Link>
+          </Reveal>
+        ))}
       </div>
     </Section>
   )

@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { type ReactNode, useEffect, useLayoutEffect, useState } from 'react'
 const useLayoutEffectSafe = typeof window === 'undefined' ? useEffect : useLayoutEffect
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import { LANDINGS } from '../content/landings'
 import { SITE } from '../content/site'
 import { track } from '../lib/supabase'
 
@@ -89,6 +90,10 @@ export function Footer() {
           <p className="mt-2 text-sm text-mute">{SITE.location}</p>
         </div>
       </div>
+      <nav aria-label="Solutions" className="mx-auto max-w-site border-t border-line px-5 py-6 sm:px-8">
+        <p className="font-display text-[11px] font-semibold tracking-label text-mute">SOLUTIONS</p>
+        <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">{LANDINGS.map((l) => <Link key={l.path} to={l.path} className="text-mute hover:text-accent">{l.short}</Link>)}</div>
+      </nav>
       <a href={SITE.parent.url} target="_blank" rel="noopener" aria-label="GarudawnX — garudawnx.com" className="group mx-auto flex max-w-site items-center gap-4 border-t border-line px-5 py-6 sm:px-8">
         <img src="/garudawnx-mark.webp" alt="GarudawnX logo" width={152} height={112} loading="lazy" className="h-10 w-auto transition-transform duration-500 group-hover:-translate-y-0.5" />
         <span className="text-sm leading-snug text-mute">A <span className="font-display font-semibold text-[#E8B53A]">GarudawnX</span> company<span className="block text-xs text-mute/80 transition-colors group-hover:text-ink">garudawnx.com ↗</span></span>
